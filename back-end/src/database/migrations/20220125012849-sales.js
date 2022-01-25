@@ -16,7 +16,32 @@ module.exports = {
         type: Sequelize.DATE
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        
+      },
+      sellerId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        foreignKey: true,
+        field: 'seller_id',
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        foreignKey: true,
+        field: 'user_id',
+        references: {
+          model: 'users',
+          key: 'id',
+        },
       },
     });
   },
