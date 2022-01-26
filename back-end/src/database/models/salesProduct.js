@@ -3,15 +3,25 @@ module.exports = (sequelize, DataTypes) => {
     sale_id: {
       primaryKey: true,
       type: DataTypes.INTEGER,
-      foreignKey: true
+      foreignKey: true,
+      validate: {
+        notEmpty: true,
+      }
     },
     product_id: {
       primaryKey: true,
       type: DataTypes.INTEGER,
-      foreignKey: true
+      foreignKey: true,
+      validate: {
+        notEmpty: true,
+      }
     },
     quantity: {
       type: DataTypes.INTEGER,
+      alloNull: false,
+      validate: {
+        notEmpty: true,
+      }
     },
   },{
     timestamp: false,

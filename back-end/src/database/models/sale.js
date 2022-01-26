@@ -2,40 +2,68 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Sale = sequelize.define('sales', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
-    total_price: DataTypes.DECIMAL,
-    delivery_address: DataTypes.STRING,
-    delivery_number: DataTypes.STRING,
-    sale_date: DataTypes.DATE,
-    status: DataTypes.STRING,
-    seller_id: {
-      type: DataTypes.INTEGER,
-      foreignKey: true
-    },
     user_id: {
       type: DataTypes.INTEGER,
-      foreignKey: true
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      }
+    },
+    seller_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      }
+    },
+    total_price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      }
+    },
+    delivery_address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      }
+    },
+    delivery_number: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      }
+    },
+    sale_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        idDate: true
+      },
+      defaultValue: DataTypes.NOW
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'Preparando',
+      validate: {
+        isIn: [['Pendente', 'Preparando', 'Saiu pra entrega', 'Entregue']]
+      }
     },
   })
 
   Sale.association = (models) => {
-    models.Sale.hasMany(models.User, {
+    models.Sale.belongsTo(models.User, {
       as: 'user_id',
       foreignKey: 'id'
     });
-    models.Sale.hasMany(models.User, {
+    models.Sale.belongsTo(models.User, {
       as: 'seller_id',
       foreignKey: 'id'
-    })
-    models.Sale.hasMany(models.SalesProduct, {
-      as: 'sale_id',
-      foreignKey: 'id'
-    })
+    });
   }
 
   return Sale;

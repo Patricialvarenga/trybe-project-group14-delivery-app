@@ -9,6 +9,6 @@ class ApiError extends Error {
     const { status, message } = err;
     throw new ApiError(message, status);
   }
-};
+}
 
 module.exports = { ApiError };
