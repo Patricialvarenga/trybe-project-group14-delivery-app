@@ -16,4 +16,4 @@ export {
   Login,
   Register,
   Seller,
-}
+};
