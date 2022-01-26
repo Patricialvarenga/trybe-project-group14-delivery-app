@@ -1,15 +1,30 @@
 import React from 'react';
 import './App.css';
-import rockGlass from './images/rockGlass.svg';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  Admin,
+  Checkout,
+  CustomerDetails,
+  CustomerOrders,
+  Login,
+  Register,
+  Seller }
+  from './pages';
 
 function App() {
   return (
-    <div className="App">
-      <span className="logo">TRYBE</span>
-      <object className="rocksGlass" type="image/svg+xml" data={ rockGlass }>
-        Glass
-      </object>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={ <Login /> } />
+        <Route path="/login" element={ <Login /> } />
+        <Route path="/admin" element={ <Admin /> } />
+        <Route path="/checkout" element={ <Checkout /> } />
+        <Route path="/customerdetails" element={ <CustomerDetails /> } />
+        <Route path="/customerorders" element={ <CustomerOrders /> } />
+        <Route path="/register" element={ <Register /> } />
+        <Route path="/seller" element={ <Seller /> } />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
