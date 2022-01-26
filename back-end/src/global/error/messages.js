@@ -1,4 +1,4 @@
-const { UNAUTHORIZED, CONFLICT, NOT_FOUND, BAD_REQUEST } = require('http-status-code').StatusCodes;
+const { UNAUTHORIZED, CONFLICT, NOT_FOUND, BAD_REQUEST } = require('http-status-codes').StatusCodes;
 
 const JWT_MALFORMED_401 = { message: 'Jwt malformed', status: UNAUTHORIZED };
 const MISSING_TOKEN_401 = { message: 'Missing auth token', status: UNAUTHORIZED };

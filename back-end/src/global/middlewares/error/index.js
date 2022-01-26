@@ -1,4 +1,4 @@
-const { INTERNAL_SERVER_ERROR } = require('http-status-code').StatusCode();
+const { INTERNAL_SERVER_ERROR } = require('http-status-codes').StatusCodes;
 
 module.exports = (err, _req, res, _next) => {
   if (err && err.status) {

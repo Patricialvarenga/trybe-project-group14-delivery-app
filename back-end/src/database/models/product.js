@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: '',
     },
   },{
-    timestamp: true,
+    timestamp: false,
   })
 
   return Product;
