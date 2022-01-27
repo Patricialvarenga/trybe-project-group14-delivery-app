@@ -1,6 +1,7 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import {
   Admin,
   Checkout,
@@ -8,8 +9,8 @@ import {
   CustomerOrders,
   Login,
   Register,
-  Seller }
-  from './pages';
+  Seller,
+} from './pages';
 
 function App() {
   return (
