@@ -31,6 +31,7 @@ export default function Register() {
           Cadastrar
         </Button>
       </div>
+      <div data-testid="common_register__element-invalid_register" />
     </div>
   );
 }
