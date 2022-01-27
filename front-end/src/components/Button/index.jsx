@@ -1,5 +1,17 @@
-import { React } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Button(props) {
-  return <input type="button" { ...props } />;
+  const { children } = props;
+  return (
+    <button type="button" { ...props }>
+      { children }
+    </button>
+  );
 }
+
+Button.propTypes = {
+  children: PropTypes
+    .objectOf(PropTypes.any)
+    .isRequired,
+};
