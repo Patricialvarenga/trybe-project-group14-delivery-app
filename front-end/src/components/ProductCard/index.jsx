@@ -1,25 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export default function ProductCard() {
+export default function ProductCard({ title, price, image }) {
+  const [setQuantity, quantity] = useState(0);
+  const priceFormatted = `R$ ${price}`.replace('.', ',');
+
+  function incrementQuantity() {
+    setQuantity(quantity + 1);
+  }
+
+  function decrementQuantity() {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    }
+  }
+
   return (
     <div>
-      <div data-testid="customer_products__element-card-price-" />
-      <img data-testid="customer_products__img-card-bg-image-" src="" alt="" />
-      <div data-testid="customer_products__element-card-title-" />
+      <div data-testid="customer_products__element-card-price-">
+        { priceFormatted }
+      </div>
+      <img
+        data-testid="customer_products__img-card-bg-image-"
+        src={ image }
+        alt={ title }
+      />
+      <div data-testid="customer_products__element-card-title-">{title}</div>
 
       <button
         data-testid="customer_products__button-card-rm-item-"
         type="button"
+        onClick={ decrementQuantity }
       >
         -
       </button>
-      <div data-testid="customer_products__input-card-quantity-">0</div>
+      <div data-testid="customer_products__input-card-quantity-">
+        { quantity }
+      </div>
       <button
         data-testid="customer_products__button-card-add-item-"
         type="button"
+        onClick={ incrementQuantity }
       >
         +
       </button>
     </div>
   );
 }
+
+ProductCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+};
