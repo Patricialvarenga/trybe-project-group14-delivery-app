@@ -5,11 +5,14 @@ import AppContext from './AppContext';
 export default function Provider({ children }) {
   const [userData, setUserData] = useState({});
   const [bagItems, setBagItems] = useState([]);
+  const [token, setToken] = useState('');
   const context = {
     userData,
     setUserData,
     bagItems,
     setBagItems,
+    token,
+    setToken,
   };
   return (
     <AppContext.Provider value={ context }>
