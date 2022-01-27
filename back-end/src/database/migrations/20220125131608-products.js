@@ -15,7 +15,7 @@ module.exports = {
         unique: true,
       },
       price: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(9, 2),
         allowNull: false,
       },
       url_image: {
@@ -23,18 +23,6 @@ module.exports = {
         allowNull: false,
         defaultValue: ''
       },
-      createAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        field: 'create_at',
-        defaultValue: Sequelize.fn('now')
-      },
-      updateAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        field: 'update_at',
-        defaultValue: Sequelize.fn('now')
-      }
     })
   },
 

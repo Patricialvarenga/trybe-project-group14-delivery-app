@@ -53,6 +53,8 @@ module.exports = (sequelize, DataTypes) => {
         isIn: [['Pendente', 'Preparando', 'Saiu pra entrega', 'Entregue']]
       }
     },
+  },{
+    createAt: 'sale_date'
   })
 
   Sale.association = (models) => {
