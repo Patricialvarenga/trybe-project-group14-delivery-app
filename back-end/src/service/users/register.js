@@ -11,8 +11,11 @@ const register = async (inforRegister) => {
   const newUser = { ...inforRegister, password: passwordMd5 };
   const { dataValues } = await user.create(newUser);
   delete dataValues.password;
-
-  return auth.createToken(dataValues);
+  const authToken = auth.createToken(dataValues);
+  return {
+    ...dataValues,
+    token: authToken,
+  };
 };
 
 module.exports = register;

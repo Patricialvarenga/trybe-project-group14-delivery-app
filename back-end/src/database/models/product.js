@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     price: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(9, 2),
       allowNull: false,
       validate: {
         notEmpty: true,

@@ -10,8 +10,11 @@ const login = async (infoLogin) => {
     where: { email: infoLogin.email, password: passwordMd5 } });
   if (!userExist) return NewError(USER_NOT_EXIST_404);
   delete userExist.password;
-
-  return auth.createToken(userExist);
+  const authToken = auth.createToken(userExist);
+  return {
+    ...userExist.dataValues,
+    token: authToken,
+  };
 };
 
 module.exports = login;
