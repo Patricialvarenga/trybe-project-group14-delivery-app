@@ -1,37 +1,61 @@
-import { React } from 'react';
+import React, { useState } from 'react';
 
-import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 export default function Register() {
+  const [register, setRegister] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  function handleChange({ target }) {
+    const { name, value } = target;
+    setRegister({
+      ...register,
+      [name]: value,
+    });
+  }
+
+  function handleSubmit() {
+    api.post('https://localhost:3000/register', register)
+      .then(console.log)
+      .catch(console.err);
+  }
+
   return (
     <div>
-      <Input
-        data-testid="common_register__input-name"
-        type="name"
-        placeholder="Seu nome"
-      />
+      <form onSubmit={ handleSubmit }>
+        <input
+          id="common_register__input-name"
+          type="name"
+          placeholder="Seu nome"
+          onChange={ handleChange }
+        />
 
-      <Input
-        data-testid="common_register__input-email"
-        type="email"
-        placeholder="seu-email@site.com.br"
-      />
+        <input
+          id="common_register__input-email"
+          type="email"
+          placeholder="seu-email@site.com.br"
+          onChange={ handleChange }
+        />
 
-      <Input
-        data-testid="common_register__input-password"
-        type="password"
-        placeholder="Sua senha"
-      />
-      <div>
-        <Button
-          data-testid="common_register__button-register"
-          type="button"
-        >
-          Cadastrar
-        </Button>
-      </div>
-      <div data-testid="common_register__element-invalid_register" />
+        <input
+          id="common_register__input-password"
+          type="password"
+          placeholder="Sua senha"
+          onChange={ handleChange }
+        />
+        <div>
+          <Button
+            id="common_register__button-register"
+            type="submit"
+          >
+            Cadastrar
+          </Button>
+        </div>
+        <div id="common_register__element-invalid_register" />
+      </form>
     </div>
   );
 }
