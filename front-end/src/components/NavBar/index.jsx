@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function NavBar() {
+export default function NavBar({ user }) {
   return (
     <div>
       <div data-testid="customer_products__element-navbar-link-products">
@@ -10,10 +11,16 @@ export default function NavBar() {
         Meus Pedidos
       </div>
 
-      <div data-testid="customer_products__element-navbar-user-full-name" />
+      <div data-testid="customer_products__element-navbar-user-full-name">
+        { user }
+      </div>
       <div data-testid="customer_products__element-navbar-link-logout">
         Sair
       </div>
     </div>
   );
 }
+
+NavBar.propTypes = {
+  user: PropTypes.string.isRequired,
+};
