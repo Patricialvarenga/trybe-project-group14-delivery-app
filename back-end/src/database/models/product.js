@@ -15,10 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       }
     },
-    url_image: {
+    urlImage: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: '',
+      field:'url_image'
     },
   },{
     timestamps: false,

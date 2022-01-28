@@ -14,6 +14,12 @@ const SCHEMARegister = Joi.object({
   role: Joi.string().required(),
 });
 
+const SHEMAProduct = Joi.object({
+  name: Joi.string().required(),
+  price: Joi.number().precision(2).positive().required(),
+  urlImage: Joi.string().required(),
+});
+
 const login = rescue(async (req, _res, next) => {
   const { error } = SCHEMALogin.validate(req.body);
   if (error) return next({ message: error.message, status: BAD_REQUEST });
@@ -26,7 +32,14 @@ const register = rescue(async (req, _res, next) => {
   next();
 });
 
+const product = rescue(async (req, _res, next) => {
+  const { error } = SHEMAProduct.validate(req.body);
+  if (error) return next({ message: error.message, status: BAD_REQUEST });
+  next();
+});
+
 module.exports = {
   login,
   register,
+  product,
 };
