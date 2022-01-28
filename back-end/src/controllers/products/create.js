@@ -12,4 +12,4 @@ module.exports = async (req, res, next) => {
     console.error(error);
     next(error);
   }
-}; 
+};
