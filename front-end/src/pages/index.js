@@ -1,19 +1,21 @@
 import Admin from './Admin';
 import Checkout from './Checkout';
 import CustomerDetails from './CustomerDetails';
-import CustomerOrders from './CustomerOrders';
-import Drinks from './Drinks';
+import CustomerOrdersDetails from './CustomerOrdersDetails';
+import Products from './Products';
 import Login from './Login';
 import Register from './Register';
-import Seller from './Seller';
+import SellerOrders from './SellerOrders';
+import SellerOrdersDetails from './SellerOrdersDetails';
 
 export {
   Admin,
   Checkout,
   CustomerDetails,
-  CustomerOrders,
-  Drinks,
+  CustomerOrdersDetails,
+  Products,
   Login,
   Register,
-  Seller,
+  SellerOrders,
+  SellerOrdersDetails,
 };

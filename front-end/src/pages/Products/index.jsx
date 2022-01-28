@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import ProductCard from '../../components/ProductCard';
 
-export default function Drinks({ total }) {
+export default function Products({ total }) {
   const totalFormatted = `R$ ${total}`.replace('.', ',');
   const label = `Ver Carrinho ${totalFormatted}`;
 
@@ -45,6 +45,6 @@ export default function Drinks({ total }) {
   );
 }
 
-Drinks.propTypes = {
+Products.propTypes = {
   total: PropTypes.number.isRequired,
 };

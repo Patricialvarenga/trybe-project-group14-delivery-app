@@ -4,12 +4,14 @@ import './App.css';
 
 import {
   Admin,
+  Products,
   Checkout,
   CustomerDetails,
-  CustomerOrders,
+  CustomerOrdersDetails,
   Login,
   Register,
-  Seller,
+  SellerOrders,
+  SellerOrdersDetails,
 } from './pages';
 
 function App() {
@@ -17,13 +19,15 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={ <Login /> } />
+        <Route path="/products" element={ <Products /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/admin" element={ <Admin /> } />
         <Route path="/checkout" element={ <Checkout /> } />
         <Route path="/customerdetails" element={ <CustomerDetails /> } />
-        <Route path="/customerorders" element={ <CustomerOrders /> } />
+        <Route path="/customerordersdetails" element={ <CustomerOrdersDetails /> } />
         <Route path="/register" element={ <Register /> } />
-        <Route path="/seller" element={ <Seller /> } />
+        <Route path="/sellerorders" element={ <SellerOrders /> } />
+        <Route path="/sellerordersdetails" element={ <SellerOrdersDetails /> } />
       </Routes>
     </BrowserRouter>
   );
