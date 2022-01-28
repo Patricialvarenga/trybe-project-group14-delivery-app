@@ -26,7 +26,7 @@ const verifyToken = async (req, res, next) => {
     const foundedEmail = await user.findOne({ where: { email } });
     if (!foundedEmail) return next(messages.JWT_MALFORMED_401);
     req.user = { id, email, role };
-    next(); 
+    next();
   } catch (err) {
     console.log(err.message);
     next(messages.JWT_MALFORMED_401);

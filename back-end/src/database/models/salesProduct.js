@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       alloNull: false,
     },
   },{
-    timestamp: false,
+    timestamps: false,
   })
 
   SalesProduct.association = (models) => {
