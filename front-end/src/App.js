@@ -4,7 +4,6 @@ import './App.css';
 
 import {
   Admin,
-  Products,
   Checkout,
   CustomerDetails,
   CustomerOrdersDetails,
@@ -19,7 +18,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={ <Login /> } />
-        <Route path="/products" element={ <Products /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/admin" element={ <Admin /> } />
         <Route path="/checkout" element={ <Checkout /> } />

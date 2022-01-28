@@ -28,37 +28,39 @@ export default function Register() {
     <div>
       <form onSubmit={ handleSubmit }>
         <input
-          id="common_register__input-name"
+          data-testid="common_register__input-name"
           name="name"
           type="text"
+          required
           placeholder="Seu nome"
           onChange={ handleChange }
         />
 
         <input
-          id="common_register__input-email"
+          data-testid="common_register__input-email"
           name="email"
           type="email"
+          required
           placeholder="seu-email@site.com.br"
           onChange={ handleChange }
         />
 
         <input
-          id="common_register__input-password"
+          data-testid="common_register__input-password"
           name="password"
           type="password"
+          required
           placeholder="Sua senha"
           onChange={ handleChange }
         />
         <div>
           <Button
             id="common_register__button-register"
-            type="submit"
           >
             Cadastrar
           </Button>
         </div>
-        <div id="common_register__element-invalid_register" />
+        <div data-testid="common_register__element-invalid_register" />
       </form>
     </div>
   );
