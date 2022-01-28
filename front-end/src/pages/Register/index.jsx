@@ -18,12 +18,10 @@ export default function Register() {
     });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    // api.post('https://localhost:3000/register', register)
-    // .then(console.log)
-    // .catch(console.err);
+  function handleSubmit() {
+    api.post('https://localhost:3000/register', register)
+      .then(console.log)
+      .catch(console.err);
   }
 
   return (
