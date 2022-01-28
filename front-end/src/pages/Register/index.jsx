@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import Button from '../../components/Button';
 
@@ -18,9 +19,11 @@ export default function Register() {
     });
   }
 
-  function handleSubmit() {
-    api.post('https://localhost:3000/register', register)
-      .then(console.log)
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    axios.post('http://localhost:3001/register', register)
+      .then(({ token }) => localStorage.setItem(token, token))
       .catch(console.err);
   }
 
