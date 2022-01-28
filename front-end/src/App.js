@@ -8,8 +8,8 @@ import {
   CustomerOrders,
   Login,
   Register,
-  Seller }
-  from './pages';
+  Seller,
+} from './pages';
 
 function App() {
   return (

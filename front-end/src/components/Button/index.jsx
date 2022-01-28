@@ -1,13 +1,21 @@
-import { React } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Button({ children, id }) {
-  return <button type="button" data-testid={ id }>{ children }</button>;
+export default function Button({ id, type, children }) {
+  const condition = type === 'button';
+
+  return (
+    <button type={ condition ? 'button' : 'submit' } data-testid={ id }>
+      {children}
+    </button>
+  );
 }
 
 Button.propTypes = {
-  children: PropTypes
-    .oneOfType([PropTypes
-      .arrayOf(PropTypes.node), PropTypes.node]).isRequired,
   id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
