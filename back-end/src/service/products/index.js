@@ -18,8 +18,16 @@ const findById = async (id) => {
     return foundedProduct;
 };
 
+const remove = async (id) => {
+    const foundedProduct = await product.findByPk(id);
+    if (!foundedProduct) return NewError(PRODUCT_NOT_EXIST_404);
+    
+    const deleted = await product.destroy({ where: { id } });
+        return { deleted };
+};
 module.exports = {
     list,
     create,
     findById,
+    remove,
 };
