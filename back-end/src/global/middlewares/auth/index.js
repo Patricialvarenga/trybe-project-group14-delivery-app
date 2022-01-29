@@ -10,8 +10,10 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
+// const SECRET = 'teste'
 const createToken = (body) => {
   const token = jwt.sign({ data: body }, process.env.SECRET, jwtConfig);
+  // const token = jwt.sign({ data: body }, SECRET, jwtConfig);
   return token;
 };
 
@@ -21,7 +23,8 @@ const verifyToken = async (req, res, next) => {
     if (!authorization) {
       return res.status(UNAUTHORIZED).json(messages.MISSING_TOKEN_401);
     }
-    const decoded = jwt.verify(authorization, process.env.SECRET); 
+    const decoded = jwt.verify(authorization, process.env.SECRET);
+    // const decoded = jwt.verify(authorization, SECRET);
     const { id, email, role } = decoded.data;
     const foundedEmail = await user.findOne({ where: { email } });
     if (!foundedEmail) return next(messages.JWT_MALFORMED_401);

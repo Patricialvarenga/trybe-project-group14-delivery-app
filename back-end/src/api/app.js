@@ -6,12 +6,20 @@ const error = require('../global/middlewares/error');
 
 const app = express();
 
-app.use(function(_req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
-    app.use(cors());
-    next();
- });
+let whitelist = ['http://localhost:3000', 'http://localhost:3001']
+  var corsOptions = {
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1 || !origin) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    }
+  }
+ 
+app.use(cors(corsOptions));
+
+
 
 app.use(bodyParser.json());
 app.use(root);
