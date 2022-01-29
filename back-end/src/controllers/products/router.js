@@ -8,8 +8,7 @@ const validation = require('../../global/middlewares/validation');
 const router = express.Router({ mergeParams: true });
 
 router.get('/:id', findById);
-// router.get('/', auth.verifyToken, list);
-router.get('/', list);
+router.get('/', auth.verifyToken, list);
 router.post('/', validation.product, create);
 
 module.exports = router;

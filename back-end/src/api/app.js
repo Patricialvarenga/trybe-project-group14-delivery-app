@@ -6,20 +6,18 @@ const error = require('../global/middlewares/error');
 
 const app = express();
 
-let whitelist = ['http://localhost:3000', 'http://localhost:3001']
-  var corsOptions = {
-    origin: function (origin, callback) {
+const whitelist = ['http://localhost:3000', 'http://localhost:3001'];
+  const corsOptions = {
+    origin(origin, callback) {
       if (whitelist.indexOf(origin) !== -1 || !origin) {
-        callback(null, true)
+        callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'))
+        callback(new Error('Not allowed by CORS'));
       }
-    }
-  }
+    },
+  };
  
 app.use(cors(corsOptions));
-
-
 
 app.use(bodyParser.json());
 app.use(root);
