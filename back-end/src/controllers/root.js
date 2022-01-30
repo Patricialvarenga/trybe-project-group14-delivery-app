@@ -2,6 +2,7 @@ const express = require('express');
 const routerLogin = require('./users/login/router');
 const routerRegister = require('./users/register/router');
 const routeProducts = require('./products/router');
+// const cors = require('cors');
 
 const root = express.Router({ mergeParams: true });
 

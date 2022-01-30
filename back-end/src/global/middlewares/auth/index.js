@@ -3,7 +3,6 @@ const { UNAUTHORIZED } = require('http-status-codes').StatusCodes;
 const jwt = require('jsonwebtoken');
 const { user } = require('../../../database/models');
 const messages = require('../../error/messages');
-// importar o model
 
 const jwtConfig = {
   expiresIn: '7d',
@@ -21,7 +20,7 @@ const verifyToken = async (req, res, next) => {
     if (!authorization) {
       return res.status(UNAUTHORIZED).json(messages.MISSING_TOKEN_401);
     }
-    const decoded = jwt.verify(authorization, process.env.SECRET); 
+    const decoded = jwt.verify(authorization, process.env.SECRET);
     const { id, email, role } = decoded.data;
     const foundedEmail = await user.findOne({ where: { email } });
     if (!foundedEmail) return next(messages.JWT_MALFORMED_401);
@@ -33,7 +32,26 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+const verifyRoleAdm = async (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
+    if (!authorization) {
+      return res.status(UNAUTHORIZED).json(messages.MISSING_TOKEN_401);
+    }
+    const decoded = jwt.verify(authorization, process.env.SECRET);
+    const { email } = decoded.data;
+    const foundedEmail = await user.findOne({ where: { email } });
+    if (foundedEmail.role !== authorization) return next(messages.UNAUTHORIZED_ROLE);
+   
+    next();
+  } catch (err) {
+    console.log(err.message);
+    next(messages.UNAUTHORIZED_ROLE);
+  }
+};
+
 module.exports = {
   createToken,
   verifyToken,
+  verifyRoleAdm,
 };
