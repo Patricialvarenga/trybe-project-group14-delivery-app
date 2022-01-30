@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { Input, Button } from '../../components';
+import { Input, Button } from '../../components';
 
 export default function Login() {
   const [state, setState] = useState({
@@ -42,31 +42,28 @@ export default function Login() {
 
   return (
     <main className="login-wrapper">
-      <label htmlFor="common_login__input-email">
+      <Input
+        type="text"
+        id="common_login__input-email"
+        onChange={ validateEmail }
+      >
         Login:
-        <input
-          type="text"
-          data-testid="common_login__input-email"
-          onChange={ validateEmail }
-        />
-      </label>
-      <label htmlFor="common_login__input-password">
+      </Input>
+      <Input
+        type="text"
+        id="common_login__input-password"
+        onChange={ validatePassword }
+      >
         Senha:
-        <input
-          type="text"
-          data-testid="common_login__input-password"
-          onChange={ validatePassword }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="common_login__button-login"
+      </Input>
+      <Button
+        id="common_login__button-login"
         disabled={ !(state.isEmailValid && state.isPasswordValid) }
         onClick={ () => postUserData(state.email, state.password) }
       >
         Login
-      </button>
-      {/* <Button id="common_login__button-register">Ainda não tenho conta</Button> */}
+      </Button>
+      <Button id="common_login__button-register">Ainda não tenho conta</Button>
       <p data-testid="common_login__element-invalid-email">{ state.errorMessage }</p>
     </main>
   );
