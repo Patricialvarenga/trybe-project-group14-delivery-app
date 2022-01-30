@@ -5,7 +5,7 @@ export default function Input({ type, id, children, onChange }) {
   return (
     <label htmlFor={ id }>
       { children }
-      <input type={ type } id={ id } onChange={ onChange } />
+      <input type={ type } data-testid={ id } onChange={ onChange } />
     </label>
   );
 }
