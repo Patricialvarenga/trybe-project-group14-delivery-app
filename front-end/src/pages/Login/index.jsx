@@ -60,13 +60,19 @@ export default function Login() {
         Senha:
       </Input>
       <Button
+        type="button"
         id="common_login__button-login"
         disabled={ !(state.isEmailValid && state.isPasswordValid) }
         onClick={ () => postUserData(state.email, state.password) }
       >
         Login
       </Button>
-      <Button id="common_login__button-register">Ainda não tenho conta</Button>
+      <Button
+        type="button"
+        id="common_login__button-register"
+      >
+        Ainda não tenho conta
+      </Button>
       <p data-testid="common_login__element-invalid-email">{ state.errorMessage }</p>
     </main>
   );
