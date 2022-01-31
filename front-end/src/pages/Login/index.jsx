@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Input, Button } from '../../components';
+import { Input } from '../../components';
 
 export default function Login() {
   const [state, setState] = useState({
@@ -59,20 +59,21 @@ export default function Login() {
       >
         Senha:
       </Input>
-      <Button
+      <button
         type="button"
-        id="common_login__button-login"
+        data-testid="common_login__button-login"
         disabled={ !(state.isEmailValid && state.isPasswordValid) }
         onClick={ () => postUserData(state.email, state.password) }
       >
         Login
-      </Button>
-      <Button
+      </button>
+      <button
         type="button"
-        id="common_login__button-register"
+        data-testid="common_login__button-register"
+        onClick={ () => navigate('/register') }
       >
         Ainda não tenho conta
-      </Button>
+      </button>
       <p data-testid="common_login__element-invalid-email">{ state.errorMessage }</p>
     </main>
   );
