@@ -55,7 +55,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   },{
     createAt: 'sale_date'
-  })
+  },
+  {
+    tableName: 'sales'
+  });
 
   Sale.association = (models) => {
     models.Sale.belongsTo(models.User, {
