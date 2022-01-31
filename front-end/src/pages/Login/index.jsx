@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { Input, Button } from '../../components';
 
 export default function Login() {
@@ -11,10 +12,11 @@ export default function Login() {
     errorMessage: '',
   });
 
+  const navigate = useNavigate();
+
   function validateEmail({ target: { value } }) {
     const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i;
     const isValid = regex.test(value);
-    console.log(value);
     setState({ ...state, isEmailValid: isValid, email: value });
   }
 
@@ -34,7 +36,8 @@ export default function Login() {
         email,
         password,
       });
-      console.log(requestResult);
+      const STATUS_OK = 200;
+      if (requestResult.status === STATUS_OK) navigate('/customer/products');
     } catch ({ response: { data: { message } } }) {
       setState({ ...state, errorMessage: message });
     }
