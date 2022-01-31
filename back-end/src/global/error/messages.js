@@ -8,6 +8,7 @@ const USER_NOT_EXIST_404 = { message: 'User not exist', status: NOT_FOUND };
 const PRODUCT_NOT_EXIST_404 = { message: 'Product not exist', status: NOT_FOUND };
 const INVALID_ENTRIES_400 = { message: 'Invalid entries', status: BAD_REQUEST };
 const INVALID_ID_400 = { message: 'Invalid product ID', status: BAD_REQUEST };
+const UNAUTHORIZED_ROLE = { message: 'Incorrect ROLE', status: UNAUTHORIZED };
 // const PRODUCT_EXIST_409 = { message: 'Product exist! Please choose another .', status: CONFLICT };
 
 module.exports = {
@@ -19,5 +20,6 @@ module.exports = {
   PRODUCT_NOT_EXIST_404,
   INVALID_ENTRIES_400,
   INVALID_ID_400,
+  UNAUTHORIZED_ROLE,
   // PRODUCT_EXIST_409
 };
