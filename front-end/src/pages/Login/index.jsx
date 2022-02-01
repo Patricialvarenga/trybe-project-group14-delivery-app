@@ -35,6 +35,7 @@ export default function Login() {
         email,
         password,
       });
+      console.log(requestResult);
       const STATUS_OK = 200;
       if (requestResult.status === STATUS_OK) navigate('/customer/products');
     } catch ({ response: { data: { message } } }) {
