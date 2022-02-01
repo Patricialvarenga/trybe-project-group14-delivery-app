@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Input } from '../../components';
 
 export default function Login() {
   const [state, setState] = useState({
@@ -45,20 +44,22 @@ export default function Login() {
 
   return (
     <main className="login-wrapper">
-      <Input
-        type="text"
-        id="common_login__input-email"
-        onChange={ validateEmail }
-      >
+      <label htmlFor="common_login__input-email">
         Login:
-      </Input>
-      <Input
-        type="text"
-        id="common_login__input-password"
-        onChange={ validatePassword }
-      >
+        <input
+          type="text"
+          data-testid="common_login__input-email"
+          onChange={ validateEmail }
+        />
+      </label>
+      <label htmlFor="common_login__input-password">
         Senha:
-      </Input>
+        <input
+          type="text"
+          data-testid="common_login__input-password"
+          onChange={ validatePassword }
+        />
+      </label>
       <button
         type="button"
         data-testid="common_login__button-login"
