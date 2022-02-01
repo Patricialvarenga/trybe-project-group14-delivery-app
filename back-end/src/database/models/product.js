@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     urlImage: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: '',
-      field:'url_image'
+      defaultValue: ''
     },
   },{
     timestamps: false,
-    tableName: 'products'
+    tableName: 'products',
+    underscored:true
   })
 
   return Product;

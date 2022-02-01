@@ -19,9 +19,9 @@ const SHEMAProduct = Joi.object({
   urlImage: Joi.string().required(),
 });
 
-const SHEMESale = Joi.object({
+const SHEMASale = Joi.object({
   totalPrice: Joi.number().precision(2).positive().required(),
-  deliveryAdress: Joi.string().required(),
+  deliveryAddress: Joi.string().required(),
   deliveryNumber: Joi.string().required(),
   userId: Joi.number().positive().required(),
   sellerId: Joi.number().positive().required(),
@@ -46,7 +46,7 @@ const product = rescue(async (req, _res, next) => {
 });
 
 const sale = rescue(async (req, _res, next) => {
-  const { error } = SHEMESale.validate(req.body);
+  const { error } = SHEMASale.validate(req.body);
   if (error) return next({ message: error.message, status: BAD_REQUEST });
   next();
 });
