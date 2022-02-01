@@ -5,7 +5,7 @@ const service = require('../../service/sales');
 module.exports = async (req, res, next) => {
   try {
     const { 
-      totalPrice, deliveryAddress, deliveryNumber, status, userId, sellerId, products, 
+      totalPrice, deliveryAddress, deliveryNumber, status, userId, sellerId, products,
     } = req.body;
 
     const newSale = await service.create({
