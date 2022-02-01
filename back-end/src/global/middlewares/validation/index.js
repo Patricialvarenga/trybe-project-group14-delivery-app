@@ -4,11 +4,11 @@ const { BAD_REQUEST } = require('http-status-codes').StatusCodes;
 
 const SCHEMALogin = Joi.object({
   email: Joi.string().email().required(),
-  password: Joi.string().required(),
+  password: Joi.string().min(6).required(),
 });
 
 const SCHEMARegister = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string().min(12).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
 });
