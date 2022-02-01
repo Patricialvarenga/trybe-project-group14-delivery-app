@@ -12,7 +12,8 @@ const jwtConfig = {
 };
 
 const createToken = (body) => {
-  const secretKey = fs.readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8');
+  const secretKey = fs
+    .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8');
   const token = jwt.sign({ data: body }, secretKey, jwtConfig);
   return token;
 };
