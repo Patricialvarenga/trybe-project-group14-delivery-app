@@ -25,7 +25,33 @@ const findById = async (id) => {
     return foundedSale;
 };
 
+const findAll = async ({ id, role }) => {
+    const userId = id;
+    const sellerId = id;
+    try {
+      if (role === 'customer') {
+        let sales = await Sale.findAll({ where: { userId } });
+  
+        if (!sales)return NewError(SALE_NOT_EXIST_404);
+  
+        return sales;
+      }
+
+      if (role === 'seller') {
+        let sales = await Sale.findAll({ where: { sellerIdgit log } });
+  
+        if (!sales)return NewError(SALE_NOT_EXIST_404);
+  
+        return sales;
+      }
+  
+    } catch (error) {
+      return error;
+    }
+  };
+
 module.exports = {
     create,
     findById,
+    findAll
 };
