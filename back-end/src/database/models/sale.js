@@ -54,9 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
   },{
-    createAt: 'sale_date'
-  },
-  {
+    createAt: 'sale_date',
     tableName: 'sales'
   });
 
