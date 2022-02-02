@@ -1,8 +1,47 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
+
+import Joi from 'joi';
+import axios from 'axios';
 
 import Button from '../../components/Button';
 
+const nameLimit = 12;
+const passwordLimit = 6;
+
+// Remove um erro ao usar o .email() no Joi
+const tldsPass = {
+  tlds: { allow: false },
+};
+
+const schema = Joi.object({
+  name: Joi
+    .string()
+    .min(nameLimit)
+    .required(),
+
+  email: Joi
+    .string()
+    .email(tldsPass)
+    .required(),
+
+  password: Joi
+    .string()
+    .min(passwordLimit)
+    .required(),
+});
+
+function validate(value) {
+  const { error } = schema.validate(value);
+  return error !== undefined;
+}
+
 export default function Register() {
+  const navigate = useNavigate();
+
+  const [invalid, setInvalid] = useState(true);
+  const [error, setError] = useState('');
+
   const [register, setRegister] = useState({
     name: '',
     email: '',
@@ -12,31 +51,50 @@ export default function Register() {
   function handleChange({ target }) {
     const { name, value } = target;
 
-    setRegister({
+    const newRegister = {
       ...register,
       [name]: value,
-    });
+    };
+
+    setRegister(newRegister);
+    setInvalid(validate(newRegister));
   }
 
-  function handleSubmit() {
-    api.post('https://localhost:3000/register', register)
-      .then(console.log)
-      .catch(console.err);
+  function showError(message) {
+    const fiveSeconds = 5000;
+
+    setError(message);
+    setTimeout(() => setError(''), fiveSeconds);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const host = 'http://localhost:3001';
+    const path = 'register';
+
+    const url = `${host}/${path}`;
+
+    try {
+      await axios.post(url, register);
+      navigate('/customer/products');
+    } catch (err) {
+      showError(err.message);
+    }
   }
 
   return (
     <div>
       <form onSubmit={ handleSubmit }>
         <input
-          id="common_register__input-name"
+          data-testid="common_register__input-name"
           name="name"
           type="text"
-          placeholder="Seu nome"
           onChange={ handleChange }
         />
 
         <input
-          id="common_register__input-email"
+          data-testid="common_register__input-email"
           name="email"
           type="email"
           placeholder="seu-email@site.com.br"
@@ -44,7 +102,7 @@ export default function Register() {
         />
 
         <input
-          id="common_register__input-password"
+          data-testid="common_register__input-password"
           name="password"
           type="password"
           placeholder="Sua senha"
@@ -53,12 +111,15 @@ export default function Register() {
         <div>
           <Button
             id="common_register__button-register"
+            disabled={ invalid }
             type="submit"
           >
             Cadastrar
           </Button>
         </div>
-        <div id="common_register__element-invalid_register" />
+        <div data-testid="common_register__element-invalid_register">
+          { error }
+        </div>
       </form>
     </div>
   );

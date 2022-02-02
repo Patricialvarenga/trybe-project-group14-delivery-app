@@ -6,6 +6,7 @@ const EMAIL_EXIST_409 = { message: 'Email already registered', status: CONFLICT 
 const INCORRECT_401 = { message: 'Incorrect username or password', status: UNAUTHORIZED };
 const USER_NOT_EXIST_404 = { message: 'User not exist', status: NOT_FOUND };
 const PRODUCT_NOT_EXIST_404 = { message: 'Product not exist', status: NOT_FOUND };
+const SALE_NOT_EXIST_404 = { message: 'Sale not exist', status: NOT_FOUND };
 const INVALID_ENTRIES_400 = { message: 'Invalid entries', status: BAD_REQUEST };
 const INVALID_ID_400 = { message: 'Invalid product ID', status: BAD_REQUEST };
 const UNAUTHORIZED_ROLE = { message: 'Incorrect ROLE', status: UNAUTHORIZED };
@@ -21,5 +22,6 @@ module.exports = {
   INVALID_ENTRIES_400,
   INVALID_ID_400,
   UNAUTHORIZED_ROLE,
+  SALE_NOT_EXIST_404,
   // PRODUCT_EXIST_409
 };
