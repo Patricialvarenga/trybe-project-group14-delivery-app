@@ -1,7 +1,7 @@
 const md5 = require('md5');
 
 module.exports = (sequelize, DataTypes) => {
-  const user = sequelize.define('user', {
+  const User = sequelize.define('User', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -22,17 +22,19 @@ module.exports = (sequelize, DataTypes) => {
     },
   },{
     timestamps: false,
+    tableName: 'users',
+    underscored:true
   })
   
-  user.association = (models) => {
-    models.user.hasMany(models.Sale, {
-      as: 'user_id',
+  User.association = (models) => {
+    models.User.hasMany(models.Sale, {
+      as: 'userId',
       foreignKey: 'id'
     });
-    models.user.hasMany(models.Sale, {
-      as: 'seller_id',
+    models.User.hasMany(models.Sale, {
+      as: 'sellerId',
       foreignKey: 'id'
     });
   }
-  return user;
+  return User;
 };

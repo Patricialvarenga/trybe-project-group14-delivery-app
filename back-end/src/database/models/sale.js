@@ -1,47 +1,47 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Sale = sequelize.define('sales', {
-    user_id: {
+  const Sale = sequelize.define('Sale', {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,
       }
     },
-    seller_id: {
+    sellerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,
       }
     },
-    total_price: {
+    totalPrice: {
       type: DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         notEmpty: true,
       }
     },
-    delivery_address: {
+    deliveryAddress: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       }
     },
-    delivery_number: {
+    deliveryNumber: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       }
     },
-    sale_date: {
+    saleDate: {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        idDate: true
+        isDate: true
       },
       defaultValue: DataTypes.NOW
     },
@@ -54,16 +54,19 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
   },{
-    createAt: 'sale_date'
-  })
+    timestamps: false,
+    tableName: 'sales',
+    underscored:true,
+
+  });
 
   Sale.association = (models) => {
     models.Sale.belongsTo(models.User, {
-      as: 'user_id',
+      as: 'userId',
       foreignKey: 'id'
     });
     models.Sale.belongsTo(models.User, {
-      as: 'seller_id',
+      as: 'sellerId',
       foreignKey: 'id'
     });
   }
