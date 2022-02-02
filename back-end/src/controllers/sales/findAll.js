@@ -2,12 +2,13 @@ const { OK } = require('http-status-codes').StatusCodes;
 const service = require('../../service/sales');
 
 module.exports = async (req, res, next) => {
+  const { id, role } = req.user;
   try {
-    const { id } = req.user;
-    const sale = await service.findById(id);
+    const sales = await service.findAll({ id, role });
 
-    return res.status(OK).json(sale);
+    res.status(OK).json(sales);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

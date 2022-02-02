@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Sale = sequelize.define('Sale', {
+  const Sale = sequelize.define('sale', {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'Preparando',
+      defaultValue: 'Pendente',
       validate: {
         isIn: [['Pendente', 'Preparando', 'Saiu pra entrega', 'Entregue']]
       }
@@ -61,11 +61,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Sale.association = (models) => {
-    models.Sale.belongsTo(models.User, {
+    models.Sale.belongsTo(models.user, {
       as: 'userId',
       foreignKey: 'id'
     });
-    models.Sale.belongsTo(models.User, {
+    models.Sale.belongsTo(models.user, {
       as: 'sellerId',
       foreignKey: 'id'
     });

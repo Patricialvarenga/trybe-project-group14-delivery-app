@@ -1,17 +1,17 @@
-const { Sale, SalesProduct } = require('../../database/models');
+const { sale, salesProduct } = require('../../database/models');
 const { ApiError: { NewError } } = require('../../global/error/apiError');
 const { SALE_NOT_EXIST_404 } = require('../../global/error/messages');
 
 const create = async ({
      totalPrice, deliveryAddress, deliveryNumber, status, userId, sellerId, products },
      ) => {
-    const newSale = await Sale.create(
+    const newSale = await sale.create(
         { totalPrice, deliveryAddress, deliveryNumber, status, userId, sellerId, products },
         );
-    const saleId = newSale.id;
-
-    const newSalesProducts = products.map(async ({ productId, quantity }) => {
-        const register = await SalesProduct.create({ quantity, saleId, productId });
+    const saleId = newSale.dataValues.id;
+    const newSalesProducts = products.map(async ({ id, quantityItens }) => {
+        const register = await salesProduct.create({ 
+          quantity: quantityItens, saleId, productId: id });
         return register;
     });
 
@@ -20,12 +20,27 @@ const create = async ({
 };
 
 const findById = async (id) => {
-    const foundedSale = await Sale.findByPk(id);
+    const foundedSale = await sale.findByPk(id);
     if (!foundedSale) return NewError(SALE_NOT_EXIST_404);
     return foundedSale;
+};
+
+const findAll = async ({ id, role }) => {
+  if (role === 'seller') {
+    const sales = await sale.findAll({ where: { sellerId: id } });
+    if (!sales) return NewError(SALE_NOT_EXIST_404);
+
+    return sales;
+  }
+
+  const sales = await sale.findAll({ where: { userId: id } });
+  if (!sales) return NewError(SALE_NOT_EXIST_404);
+
+  return sales;
 };
 
 module.exports = {
     create,
     findById,
+    findAll,
 };
