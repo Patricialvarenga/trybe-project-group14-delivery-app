@@ -1,11 +1,20 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Navigate } from 'react-router-dom';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar';
 import AppContext from '../../context/AppContext';
+import TableList from '../../components/TableList';
 
 function Checkout() {
-  const { bagItens, setBagItens, setTotalPrice, totalPrice } = useContext(AppContext);
+  const {
+    bagItens,
+    setBagItens,
+    setTotalPrice,
+    totalPrice,
+    token,
+  } = useContext(AppContext);
+
   const [inputCheckout, setInputCheckout] = useState({
     adress: '',
     number: '',
@@ -19,8 +28,11 @@ function Checkout() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/checkout', {
+      const Authorization = 'Authorization';
+      axios.defaults.headers.common[Authorization] = token;
+      await axios.post('http://localhost:3000/sales', {
         ...inputCheckout,
+        totalPrice,
       });
       Swal.fire({
         title: 'Pronto! :D',
@@ -29,6 +41,7 @@ function Checkout() {
         showConfirmButton: false,
         timer: 1500,
       });
+      return <Navigate to="/order-details" />;
     } catch ({ message }) {
       Swal.fire({
         title: 'Error!',
@@ -68,55 +81,14 @@ function Checkout() {
         {
           bagItens.map((item, key) => (
             <div key={ key }>
-              <table>
-                <thead>
-                  <tr>
-                    <td>Item</td>
-                    <td>Descrição</td>
-                    <td>Quantidade</td>
-                    <td>Valor Unitário</td>
-                    <td>Sub-total</td>
-                    <td>Remover Item</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td
-                      data-testid={
-                        `customer_checkout__element-order-table-item-number-${key}`
-                      }
-                    >
-                      {
-                        item.name
-                      }
-                    </td>
-                    <td
-                      data-testid={ `customer_checkout__element-order-table-name-${key}` }
-                    >
-                      {
-                        item.quantityItens
-                      }
-                    </td>
-                    <td
-                      data-testid={
-                        `customer_checkout__element-order-table-quantity-${key}`
-                      }
-                    >
-                      {
-                        item.price
-                      }
-                    </td>
-                    <td
-                      data-testid={
-                        `customer_checkout__element-order-table-unit-price-${key}`
-                      }
-                    >
-                      R$:
-                      {item.price * item.quantityItens}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <TableList
+                id={ item.id }
+                screen="checkout"
+                name={ item.name }
+                key={ key }
+                quantityItens={ item.quantityItens }
+                price={ item.price }
+              />
               <button
                 data-testid={ `customer_checkout__element-order-table-remove-${key}` }
                 type="button"
