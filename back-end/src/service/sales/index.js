@@ -20,7 +20,7 @@ const create = async ({
 };
 
 const findById = async (id) => {
-    const foundedSale = await sale.findByPk({ userId: id });
+    const foundedSale = await sale.findByPk(id);
     if (!foundedSale) return NewError(SALE_NOT_EXIST_404);
     return foundedSale;
 };
