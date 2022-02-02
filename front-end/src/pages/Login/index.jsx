@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AppContext from '../../context/AppContext';
 
 export default function Login() {
   const [state, setState] = useState({
@@ -10,6 +11,7 @@ export default function Login() {
     isPasswordValid: false,
     errorMessage: '',
   });
+  const { setToken } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -31,13 +33,15 @@ export default function Login() {
 
   async function postUserData(email, password) {
     try {
-      const requestResult = await axios.post('http://localhost:3001/login', {
+      const { status, data: { token } } = await axios.post('http://localhost:3001/login', {
         email,
         password,
       });
-      console.log(requestResult);
       const STATUS_OK = 200;
-      if (requestResult.status === STATUS_OK) navigate('/customer/products');
+      if (status === STATUS_OK) {
+        setToken(token);
+        navigate('/customer/products');
+      }
     } catch ({ response: { data: { message } } }) {
       setState({ ...state, errorMessage: message });
     }
