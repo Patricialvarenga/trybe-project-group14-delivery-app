@@ -16,8 +16,9 @@ function Checkout() {
   } = useContext(AppContext);
 
   const [inputCheckout, setInputCheckout] = useState({
-    adress: '',
-    number: '',
+    deliveryAddress: '',
+    deliveryNumber: '',
+    sallerId: '',
   });
 
   const handleRemoveItem = (id) => {
@@ -31,7 +32,7 @@ function Checkout() {
       const Authorization = 'Authorization';
       axios.defaults.headers.common[Authorization] = token;
       await axios.post('http://localhost:3000/sales', {
-        ...inputCheckout,
+        products: [...inputCheckout],
         totalPrice,
       });
       Swal.fire({
@@ -106,28 +107,33 @@ function Checkout() {
       <h3>Detalhes e Endereço para Entrega</h3>
       <div>
         <form action="POST" onSubmit={ (e) => handleSubmit(e) }>
-          <select>
+          <select
+            onChange={ ({ target }) => setInputCheckout({
+              ...inputCheckout,
+              sallerId: target.value,
+            }) }
+          >
             P.Vendedora Responsável:
             <option value="2">Faluna Pereira</option>
           </select>
-          <label htmlFor="adress">
+          <label htmlFor="deliveryAddress">
             Endereço
             <input
-              name="adress"
+              name="deliveryAddress"
               type="text"
-              value={ inputCheckout.adress }
+              value={ inputCheckout.deliveryAddress }
               onClick={ ({ target }) => setInputCheckout({
-                ...inputCheckout, adress: target.value }) }
+                ...inputCheckout, deliveryAddress: target.value }) }
             />
           </label>
           <label htmlFor="Número">
             Número
             <input
-              name="number"
+              name="deliveryNumber"
               type="text"
-              value={ inputCheckout.number }
+              value={ inputCheckout.deliveryNumber }
               onClick={ ({ target }) => setInputCheckout({
-                ...inputCheckout, number: target.value }) }
+                ...inputCheckout, deliveryNumber: target.value }) }
             />
           </label>
           <button type="submit">Finalizar o pedido</button>
