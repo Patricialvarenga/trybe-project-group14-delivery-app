@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const SalesProduct = sequelize.define('SalesProduct', {
+  const SalesProduct = sequelize.define('salesProduct', {
     saleId: {
       primaryKey: true,
       type: DataTypes.INTEGER,
@@ -16,16 +16,16 @@ module.exports = (sequelize, DataTypes) => {
     },
   },{
     timestamps: false,
-    tableName: 'salesProducts',
+    tableName: 'sales_products',
     underscored:true
   })
 
   SalesProduct.association = (models) => {
-    models.SalesProduct.belongsTo(models.Sale, {
+    SalesProduct.belongsTo(models.sale, {
       as: 'saleId',
       foreignKey: 'id',
     })
-    models.SalesProduct.belongsTo(models.Product, {
+    SalesProduct.belongsTo(models.product, {
       as: 'productId',
       foreignKey: 'id',
     })

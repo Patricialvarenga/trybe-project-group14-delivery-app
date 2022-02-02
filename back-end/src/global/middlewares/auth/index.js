@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { UNAUTHORIZED } = require('http-status-codes').StatusCodes;
 const jwt = require('jsonwebtoken');
-const { User } = require('../../../database/models');
+const { user } = require('../../../database/models');
 const messages = require('../../error/messages');
 
 const jwtConfig = {
@@ -22,7 +22,7 @@ const verifyToken = async (req, res, next) => {
     }
     const decoded = jwt.verify(authorization, process.env.SECRET);
     const { id, email, role } = decoded.data;
-    const foundedEmail = await User.findOne({ where: { email } });
+    const foundedEmail = await user.findOne({ where: { email } });
     if (!foundedEmail) return next(messages.JWT_MALFORMED_401);
     req.user = { id, email, role };
     next();
@@ -40,7 +40,7 @@ const verifyRoleAdm = async (req, res, next) => {
     }
     const decoded = jwt.verify(authorization, process.env.SECRET);
     const { email } = decoded.data;
-    const foundedEmail = await User.findOne({ where: { email } });
+    const foundedEmail = await user.findOne({ where: { email } });
     if (foundedEmail.role !== authorization) return next(messages.UNAUTHORIZED_ROLE);
    
     next();

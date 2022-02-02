@@ -23,8 +23,8 @@ const SHEMASale = Joi.object({
   totalPrice: Joi.number().precision(2).positive().required(),
   deliveryAddress: Joi.string().required(),
   deliveryNumber: Joi.string().required(),
-  userId: Joi.number().positive().required(),
   sellerId: Joi.number().positive().required(),
+  products: Joi.array().required(),
 });
 
 const login = rescue(async (req, _res, next) => {
