@@ -9,8 +9,6 @@ module.exports = async (req, res, next) => {
     } = req.body;
     const { id: userId } = req.user; 
 
-    const { id: userId } = req.user;
-
     const newSale = await service.create({
       totalPrice, deliveryAddress, deliveryNumber, status, userId, sellerId, products });
 
