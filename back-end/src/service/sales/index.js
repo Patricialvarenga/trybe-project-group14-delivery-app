@@ -16,7 +16,7 @@ const create = async ({
     });
 
     await Promise.all(newSalesProducts);
-    return newSale;
+    return newSale.dataValues;
 };
 
 const findById = async (saleId) => {
