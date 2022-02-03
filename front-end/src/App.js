@@ -25,6 +25,7 @@ function App() {
         <Route path="/customerorders" element={ <CustomerOrders /> } />
         <Route path="/register" element={ <Register /> } />
         <Route path="/seller" element={ <Seller /> } />
+        <Route path="/checkout" element={ <Checkout /> } />
       </Routes>
     </BrowserRouter>
   );
