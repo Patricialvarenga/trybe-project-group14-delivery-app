@@ -9,7 +9,14 @@ export default function Button({ id, children }) {
   );
 }
 
+Button.defaultProps = {
+  disabled: false,
+  onClick: undefined,
+};
+
 Button.propTypes = {
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
   id: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

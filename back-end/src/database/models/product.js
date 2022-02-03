@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Product = sequelize.define('products', {
+  const Product = sequelize.define('product', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -15,13 +15,15 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       }
     },
-    url_image: {
+    urlImage: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: '',
+      defaultValue: ''
     },
   },{
-    timestamp: false,
+    timestamps: false,
+    tableName: 'products',
+    underscored:true
   })
 
   return Product;

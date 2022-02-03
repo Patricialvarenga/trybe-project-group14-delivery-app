@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     const newLogin = await login({ email, password });
     return res.status(OK).json(newLogin);
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
     next(err);
   }
 };
