@@ -5,6 +5,7 @@ const MISSING_TOKEN_401 = { message: 'Missing auth token', status: UNAUTHORIZED 
 const EMAIL_EXIST_409 = { message: 'Email already registered', status: CONFLICT };
 const INCORRECT_401 = { message: 'Incorrect username or password', status: UNAUTHORIZED };
 const USER_NOT_EXIST_404 = { message: 'User not exist', status: NOT_FOUND };
+const USER__EXIST_409 = { message: 'User already registered', status: CONFLICT };
 const PRODUCT_NOT_EXIST_404 = { message: 'Product not exist', status: NOT_FOUND };
 const SALE_NOT_EXIST_404 = { message: 'Sale not exist', status: NOT_FOUND };
 const INVALID_ENTRIES_400 = { message: 'Invalid entries', status: BAD_REQUEST };
@@ -18,6 +19,7 @@ module.exports = {
   EMAIL_EXIST_409,
   INCORRECT_401,
   USER_NOT_EXIST_404,
+  USER__EXIST_409,
   PRODUCT_NOT_EXIST_404,
   INVALID_ENTRIES_400,
   INVALID_ID_400,
