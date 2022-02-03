@@ -38,7 +38,10 @@ module.exports = {
       }
     ];
     
-    return queryInterface.bulkInsert('sales', data, {});
+    return queryInterface.bulkInsert('sales', data, {
+      timestamps: false,
+      tableName: 'sales'
+    });
   },
 
   down: async (queryInterface) => await queryInterface.bulkDelete('sales', null, {})
