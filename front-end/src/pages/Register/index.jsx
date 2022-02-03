@@ -15,20 +15,9 @@ const tldsPass = {
 };
 
 const schema = Joi.object({
-  name: Joi
-    .string()
-    .min(nameLimit)
-    .required(),
-
-  email: Joi
-    .string()
-    .email(tldsPass)
-    .required(),
-
-  password: Joi
-    .string()
-    .min(passwordLimit)
-    .required(),
+  name: Joi.string().min(nameLimit).required(),
+  email: Joi.string().email(tldsPass).required(),
+  password: Joi.string().min(passwordLimit).required(),
 });
 
 function validate(value) {
