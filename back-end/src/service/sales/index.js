@@ -10,17 +10,17 @@ const create = async ({
         );
     const saleId = newSale.dataValues.id;
     const newSalesProducts = products.map(async ({ id, quantityItens }) => {
-        const register = await salesProduct.create({ 
+        const register = await salesProduct.create({
           quantity: quantityItens, saleId, productId: id });
         return register;
     });
 
     await Promise.all(newSalesProducts);
-    return newSale;
+    return newSale.dataValues;
 };
 
-const findById = async (id) => {
-    const foundedSale = await sale.findByPk(id);
+const findById = async (saleId) => {
+    const foundedSale = await sale.findByPk(saleId);
     if (!foundedSale) return NewError(SALE_NOT_EXIST_404);
     return foundedSale;
 };
