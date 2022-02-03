@@ -12,9 +12,10 @@ const jwtConfig = {
 };
 
 const createToken = (body) => {
+  const { id, email, role } = body;
   const secretKey = fs
     .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8');
-  const token = jwt.sign({ data: body }, secretKey, jwtConfig);
+  const token = jwt.sign({ data: { id, email, role } }, secretKey, jwtConfig);
   return token;
 };
 
