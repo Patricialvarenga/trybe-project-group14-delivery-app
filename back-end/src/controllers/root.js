@@ -4,6 +4,8 @@ const routerRegister = require('./users/register/router');
 const routeSellers = require('./users/findAll/router');
 const routeProducts = require('./products/router');
 const routeSales = require('./sales/router');
+const routeAdmin = require('./users/admin/router');
+
 const root = express.Router({ mergeParams: true });
 
 root.use('/images', express.static('public'));

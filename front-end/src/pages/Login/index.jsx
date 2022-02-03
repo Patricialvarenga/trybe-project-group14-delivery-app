@@ -11,7 +11,7 @@ export default function Login() {
     isPasswordValid: false,
     errorMessage: '',
   });
-  const { setToken } = useContext(AppContext);
+  const { setToken, setUserData } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -31,16 +31,23 @@ export default function Login() {
     }
   }
 
+  function redirector(role) {
+    if (role === 'administrator') navigate('/admin/manage');
+    else if (role === 'customer') navigate('/customer/products');
+    else if (role === 'seller') navigate('/seller/orders');
+  }
+
   async function postUserData(email, password) {
     try {
-      const { status, data: { token } } = await axios.post('http://localhost:3001/login', {
+      const { status, data } = await axios.post('http://localhost:3001/login', {
         email,
         password,
       });
       const STATUS_OK = 200;
       if (status === STATUS_OK) {
-        setToken(token);
-        navigate('/customer/products');
+        setUserData(data);
+        setToken(data.token);
+        redirector(data.role);
       }
     } catch ({ response: { data: { message } } }) {
       setState({ ...state, errorMessage: message });
