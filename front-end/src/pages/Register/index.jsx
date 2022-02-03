@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import React, { useState, useContext } from 'react';
 
 import Joi from 'joi';
 import axios from 'axios';
 
+import AppContext from '../../context/AppContext';
 import Button from '../../components/Button';
 
 const nameLimit = 12;
@@ -15,20 +17,9 @@ const tldsPass = {
 };
 
 const schema = Joi.object({
-  name: Joi
-    .string()
-    .min(nameLimit)
-    .required(),
-
-  email: Joi
-    .string()
-    .email(tldsPass)
-    .required(),
-
-  password: Joi
-    .string()
-    .min(passwordLimit)
-    .required(),
+  name: Joi.string().min(nameLimit).required(),
+  email: Joi.string().email(tldsPass).required(),
+  password: Joi.string().min(passwordLimit).required(),
 });
 
 function validate(value) {
@@ -37,11 +28,9 @@ function validate(value) {
 }
 
 export default function Register() {
-  const navigate = useNavigate();
-
   const [invalid, setInvalid] = useState(true);
-  const [error, setError] = useState('');
-
+  const { setToken } = useContext(AppContext);
+  const navigate = useNavigate();
   const [register, setRegister] = useState({
     name: '',
     email: '',
@@ -60,26 +49,22 @@ export default function Register() {
     setInvalid(validate(newRegister));
   }
 
-  function showError(message) {
-    const fiveSeconds = 5000;
-
-    setError(message);
-    setTimeout(() => setError(''), fiveSeconds);
-  }
-
   async function handleSubmit(e) {
     e.preventDefault();
-
-    const host = 'http://localhost:3001';
-    const path = 'register';
-
-    const url = `${host}/${path}`;
-
+    const OK = 201;
     try {
-      await axios.post(url, register);
-      navigate('/customer/products');
+      const { data, status } = await axios.post('http://localhost:3001/register', { ...register });
+      setToken(data.token);
+      if (status === OK) return navigate('/customer/products');
     } catch (err) {
-      showError(err.message);
+      console.log(err);
+      Swal.fire({
+        title: 'Ops!',
+        text: err.message,
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   }
 
@@ -116,9 +101,6 @@ export default function Register() {
           >
             Cadastrar
           </Button>
-        </div>
-        <div data-testid="common_register__element-invalid_register">
-          { error }
         </div>
       </form>
     </div>
