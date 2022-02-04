@@ -55,6 +55,7 @@ export default function ProductCard({ id, name, price, urlImage }) {
       <button
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="button"
+        disabled={ quantity <= 0 }
         onClick={ decrementQuantity }
       >
         -

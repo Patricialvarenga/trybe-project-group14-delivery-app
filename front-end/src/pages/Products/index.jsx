@@ -8,7 +8,7 @@ import Button from '../../components/Button';
 import ProductCard from '../../components/ProductCard';
 
 export default function Products() {
-  const { token, bagItens, setTotalPrice, totalPrice } = useContext(context);
+  const { token, bagItens, userData, setTotalPrice, totalPrice } = useContext(context);
 
   const [products, setProducts] = useState([]);
 
@@ -18,6 +18,7 @@ export default function Products() {
     axios
       .get('http://localhost:3001/products', config)
       .then(({ data }) => {
+        localStorage.user = JSON.stringify({ ...userData, token });
         setProducts(data);
       })
       .catch(console.err);
@@ -66,7 +67,7 @@ export default function Products() {
         disabled={ totalPrice <= 0 }
         id="customer_products__checkout-bottom-value"
       >
-        {`Ver Carrinho R$ ${totalPrice.toFixed(2)}`}
+        {`${totalPrice.toFixed(2).replace('.', ',')}`}
       </Button>
     </div>
   );

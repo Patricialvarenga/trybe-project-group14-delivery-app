@@ -69,8 +69,6 @@ export default function Register() {
 
     try {
       const { data: { token, ...user } } = await axios.post(url, register);
-      const strJSON = JSON.stringify;
-      localStorage.setItem('user', strJSON({ token, ...user }));
       setUserData(user);
       setToken(token);
       navigate('/customer/products');

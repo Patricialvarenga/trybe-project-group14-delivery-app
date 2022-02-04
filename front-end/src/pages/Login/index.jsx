@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../context/AppContext';
 
 export default function Login() {
-  localStorage.clear();
-
   const [state, setState] = useState({
     email: '',
     isEmailValid: false,
@@ -33,6 +31,10 @@ export default function Login() {
     }
   }
 
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   async function postUserData(email, password) {
     try {
       const { status, data: { token, ...user } } = await axios.post('http://localhost:3001/login', {
@@ -41,8 +43,6 @@ export default function Login() {
       });
       const STATUS_OK = 200;
       if (status === STATUS_OK) {
-        const strJSON = JSON.stringify;
-        localStorage.setItem('user', strJSON({ token, ...user }));
         setUserData(user);
         setToken(token);
         navigate('/customer/products');
