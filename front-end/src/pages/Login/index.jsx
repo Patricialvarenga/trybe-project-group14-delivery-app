@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import AppContext from '../../context/AppContext';
 
 export default function Login() {
+  localStorage.clear();
+
   const [state, setState] = useState({
     email: '',
     isEmailValid: false,
@@ -11,7 +13,7 @@ export default function Login() {
     isPasswordValid: false,
     errorMessage: '',
   });
-  const { setToken } = useContext(AppContext);
+  const { setUserData, setToken } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -33,12 +35,15 @@ export default function Login() {
 
   async function postUserData(email, password) {
     try {
-      const { status, data: { token } } = await axios.post('http://localhost:3001/login', {
+      const { status, data: { token, ...user } } = await axios.post('http://localhost:3001/login', {
         email,
         password,
       });
       const STATUS_OK = 200;
       if (status === STATUS_OK) {
+        const strJSON = JSON.stringify;
+        localStorage.setItem('user', strJSON({ token, ...user }));
+        setUserData(user);
         setToken(token);
         navigate('/customer/products');
       }

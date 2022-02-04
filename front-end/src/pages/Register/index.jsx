@@ -1,11 +1,11 @@
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
 import axios from 'axios';
-
 import Joi from 'joi';
-import axios from 'axios';
 
-import Button from '../../components/Button';
+// import Button from '../../components/Button';
+
+import context from '../../context/AppContext';
 
 const nameLimit = 12;
 const passwordLimit = 6;
@@ -28,6 +28,8 @@ function validate(value) {
 
 export default function Register() {
   const navigate = useNavigate();
+
+  const { setUserData, setToken } = useContext(context);
 
   const [invalid, setInvalid] = useState(true);
   const [error, setError] = useState('');
@@ -66,7 +68,11 @@ export default function Register() {
     const url = `${host}/${path}`;
 
     try {
-      await axios.post(url, register);
+      const { data: { token, ...user } } = await axios.post(url, register);
+      const strJSON = JSON.stringify;
+      localStorage.setItem('user', strJSON({ token, ...user }));
+      setUserData(user);
+      setToken(token);
       navigate('/customer/products');
     } catch (err) {
       showError(err.message);
@@ -100,13 +106,13 @@ export default function Register() {
           onChange={ handleChange }
         />
         <div>
-          <Button
+          <button
             id="common_register__button-register"
             disabled={ invalid }
             type="submit"
           >
             Cadastrar
-          </Button>
+          </button>
         </div>
         <div data-testid="common_register__element-invalid_register">
           { error }

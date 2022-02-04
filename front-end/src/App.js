@@ -5,7 +5,8 @@ import {
   Admin,
   Checkout,
   CustomerDetails,
-  Drinks,
+  CustomerOrdersDetails,
+  Products,
   Login,
   Register,
   SellerOrders,
@@ -19,7 +20,7 @@ function App() {
         <Route path="/" element={ <Navigate to="/login" /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/admin" element={ <Admin /> } />
-        <Route path="/customer/products" element={ <Drinks /> } />
+        <Route path="/customer/products" element={ <Products /> } />
         <Route path="/checkout" element={ <Checkout /> } />
         <Route path="/customerdetails" element={ <CustomerDetails /> } />
         <Route path="/customerordersdetails" element={ <CustomerOrdersDetails /> } />

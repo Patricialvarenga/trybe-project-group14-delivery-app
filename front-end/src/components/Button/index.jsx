@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Button({ id, children }) {
+export default function Button({ id, type, children, disabled, onClick }) {
+  const condition = type === 'button';
+
   return (
-    <button type="submit" data-testid={ id }>
+    <button
+      type={ condition ? 'button' : 'submit' }
+      data-testid={ id }
+      disabled={ disabled }
+      onClick={ onClick }
+    >
       {children}
     </button>
   );
@@ -18,6 +25,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

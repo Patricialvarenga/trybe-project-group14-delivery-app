@@ -1,33 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
+import axios from 'axios';
 
+import context from '../../context/AppContext';
+
+import NavBar from '../../components/NavBar';
 import Button from '../../components/Button';
 import ProductCard from '../../components/ProductCard';
 
-export default function Products({ total }) {
-  const totalFormatted = `R$ ${total}`.replace('.', ',');
-  const label = `Ver Carrinho ${totalFormatted}`;
+export default function Products() {
+  const { token, bagItens, setTotalPrice, totalPrice } = useContext(context);
 
   const [products, setProducts] = useState([]);
 
   function getDrinks() {
-    api.get('http://localhost:3000', token)
-      .then((data) => setProducts(data))
+    const config = { headers: { authorization: token } };
+
+    axios
+      .get('http://localhost:3001/products', config)
+      .then(({ data }) => {
+        setProducts(data);
+      })
       .catch(console.err);
   }
 
   function generateProductCards() {
-    return (
-      products.map(({ title, price, image }, key) => {
-        const props = { title, price, image };
-        return <ProductCard key={ key } { ...props } />;
-      })
-    );
+    return products.map(({ id, name, price, urlImage }) => {
+      const props = { id, name, price, urlImage };
+      return <ProductCard key={ id } { ...props } />;
+    });
   }
 
+  const allPrice = useCallback(async () => {
+    if (bagItens.length <= 0) {
+      return setTotalPrice(0);
+    }
+    try {
+      const calcTotal = [];
+      bagItens.map(({ price, quantityItens }) => {
+        const calc = price * quantityItens;
+        return calcTotal.push(calc);
+      });
+      const reducer = calcTotal.reduce((acc, cur) => acc + cur);
+      setTotalPrice(reducer);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [bagItens, setTotalPrice]);
+
   useEffect(() => {
-    getDrinks();
-  }, []);
+    allPrice();
+  }, [allPrice]);
+
+  useEffect(getDrinks, [token]);
 
   if (products.length <= 0) {
     return <h1>Loading...</h1>;
@@ -35,16 +59,15 @@ export default function Products({ total }) {
 
   return (
     <div>
-      <div>
-        { generateProductCards() }
-      </div>
-      <Button id="customer_products__checkout-bottom-value">
-        { label }
+      <NavBar />
+      <div>{generateProductCards()}</div>
+      <Button
+        type="button"
+        disabled={ totalPrice <= 0 }
+        id="customer_products__checkout-bottom-value"
+      >
+        {`Ver Carrinho R$ ${totalPrice.toFixed(2)}`}
       </Button>
     </div>
   );
 }
-
-Products.propTypes = {
-  total: PropTypes.number.isRequired,
-};
