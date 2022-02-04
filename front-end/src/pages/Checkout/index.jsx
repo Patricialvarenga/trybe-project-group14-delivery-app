@@ -9,25 +9,20 @@ import TableList from '../../components/TableList';
 
 function Checkout() {
   const {
+    token,
     bagItens,
     setBagItens,
-    setTotalPrice,
     totalPrice,
-    token,
+    setTotalPrice,
   } = useContext(AppContext);
 
   const [inputCheckout, setInputCheckout] = useState({
     deliveryAddress: '',
     deliveryNumber: '',
-    sallerId: '',
+    sellerId: '',
   });
 
-  const handleRemoveItem = (id) => {
-    const removeItem = bagItens.filter((item) => item.id !== id);
-    return setBagItens(removeItem);
-  };
-
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
     try {
       const Authorization = 'Authorization';
@@ -53,23 +48,40 @@ function Checkout() {
         timer: 1500,
       });
     }
-  };
+  }
 
-  const allPrice = useCallback(
-    async () => {
-      try {
-        const calcTotal = [];
-        bagItens.map(({ price, quantityItens }) => {
-          const calc = price * quantityItens;
-          return calcTotal.push(calc);
-        });
-        const reducer = calcTotal.reduce((acc, cur) => acc + cur);
-        setTotalPrice(reducer);
-      } catch (error) {
-        console.log(error);
-      }
-    }, [bagItens, setTotalPrice],
-  );
+  function handleRemoveItem(id) {
+    const removeItem = bagItens.filter((item) => item.id !== id);
+
+    if (removeItem.length <= 0) {
+      setTotalPrice(0);
+    }
+
+    return setBagItens(removeItem);
+  }
+
+  function handleChange({ target }) {
+    const { name, value } = target;
+
+    setInputCheckout({
+      ...inputCheckout,
+      [name]: value,
+    });
+  }
+
+  const allPrice = useCallback(async () => {
+    try {
+      const calcTotal = [];
+      bagItens.map(({ price, quantityItens }) => {
+        const calc = price * quantityItens;
+        return calcTotal.push(calc);
+      });
+      const reducer = calcTotal.reduce((acc, cur) => acc + cur);
+      setTotalPrice(reducer);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [bagItens, setTotalPrice]);
 
   useEffect(() => {
     allPrice();
@@ -77,67 +89,66 @@ function Checkout() {
 
   return (
     <div>
-      <NavBar user="Amanda" />
+      <NavBar />
       <div>
         <h3>Finalizar pedido</h3>
-        {
-          bagItens.map((item, key) => (
-            <div key={ key }>
-              <TableList
-                id={ item.id }
-                screen="checkout"
-                name={ item.name }
-                key={ key }
-                quantityItens={ item.quantityItens }
-                price={ item.price }
-              />
-              <button
-                data-testid={ `customer_checkout__element-order-table-remove-${key}` }
-                type="button"
-                onClick={ () => handleRemoveItem(item.id) }
-              >
-                Remover
-              </button>
-            </div>
-          ))
-        }
+        {bagItens.map((item, index) => (
+          <div key={ item.id }>
+            <TableList
+              screen="checkout"
+              index={ index }
+              id={ index + 1 }
+              name={ item.name }
+              price={ item.price }
+              quantityItens={ item.quantityItens }
+            />
+            <button
+              data-testid={ `customer_checkout__element-order-table-remove-${index}` }
+              onClick={ () => handleRemoveItem(item.id) }
+              type="button"
+            >
+              Remover
+            </button>
+          </div>
+        ))}
         <div data-testid="customer_checkout__element-order-total-price">
-          { `Total: R$ ${totalPrice}` }
+          { totalPrice.toFixed(2).replace('.', ',') }
         </div>
       </div>
       <h3>Detalhes e Endereço para Entrega</h3>
       <div>
         <form action="POST" onSubmit={ (e) => handleSubmit(e) }>
           <select
-            onChange={ ({ target }) => setInputCheckout({
-              ...inputCheckout,
-              sallerId: target.value,
-            }) }
+            data-testid="customer_checkout__select-seller"
+            onChange={ handleChange }
           >
             P.Vendedora Responsável:
-            <option value="2">Faluna Pereira</option>
+            <option value="1">Elias Forte</option>
           </select>
           <label htmlFor="deliveryAddress">
             Endereço
             <input
+              data-testid="customer_checkout__input-address"
               name="deliveryAddress"
               type="text"
-              value={ inputCheckout.deliveryAddress }
-              onClick={ ({ target }) => setInputCheckout({
-                ...inputCheckout, deliveryAddress: target.value }) }
+              onClick={ handleChange }
             />
           </label>
           <label htmlFor="Número">
             Número
             <input
+              data-testid="customer_checkout__input-addressNumber"
               name="deliveryNumber"
               type="text"
-              value={ inputCheckout.deliveryNumber }
-              onClick={ ({ target }) => setInputCheckout({
-                ...inputCheckout, deliveryNumber: target.value }) }
+              onClick={ handleChange }
             />
           </label>
-          <button type="submit">Finalizar o pedido</button>
+          <button
+            data-testid="customer_checkout__button-submit-order"
+            type="submit"
+          >
+            Finalizar o pedido
+          </button>
         </form>
       </div>
     </div>
