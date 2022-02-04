@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Joi from 'joi';
 
-// import Button from '../../components/Button';
+import Button from '../../components/Button';
 
 import context from '../../context/AppContext';
 
@@ -104,13 +104,13 @@ export default function Register() {
           onChange={ handleChange }
         />
         <div>
-          <button
+          <Button
             id="common_register__button-register"
             disabled={ invalid }
             type="submit"
           >
             Cadastrar
-          </button>
+          </Button>
         </div>
         <div data-testid="common_register__element-invalid_register">
           { error }
