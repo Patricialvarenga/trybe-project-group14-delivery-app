@@ -4,15 +4,18 @@ import AppContext from './AppContext';
 
 export default function Provider({ children }) {
   const [userData, setUserData] = useState({});
-  const [bagItems, setBagItems] = useState([]);
+  const [bagItens, setBagItens] = useState([]);
   const [token, setToken] = useState('');
+  const [totalPrice, setTotalPrice] = useState(0);
   const context = {
     userData,
     setUserData,
-    bagItems,
-    setBagItems,
+    bagItens,
+    setBagItens,
     token,
     setToken,
+    totalPrice,
+    setTotalPrice,
   };
   return (
     <AppContext.Provider value={ context }>

@@ -11,9 +11,10 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
+const secretKey = fs
+  .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8');
+
 const createToken = (body) => {
-  const secretKey = fs
-    .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8');
   const token = jwt.sign({ data: body }, secretKey, jwtConfig);
   return token;
 };
@@ -24,7 +25,7 @@ const verifyToken = async (req, res, next) => {
     if (!authorization) {
       return res.status(UNAUTHORIZED).json(messages.MISSING_TOKEN_401);
     }
-    const decoded = jwt.verify(authorization, process.env.SECRET);
+    const decoded = jwt.verify(authorization, secretKey);
     const { id, email, role } = decoded.data;
     const foundedEmail = await user.findOne({ where: { email } });
     if (!foundedEmail) return next(messages.JWT_MALFORMED_401);
