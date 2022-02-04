@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import context from '../../context/AppContext';
@@ -9,6 +10,7 @@ import ProductCard from '../../components/ProductCard';
 
 export default function Products() {
   const { token, bagItens, userData, setTotalPrice, totalPrice } = useContext(context);
+  const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
 
@@ -63,11 +65,15 @@ export default function Products() {
       <NavBar />
       <div>{generateProductCards()}</div>
       <Button
-        type="button"
+        onClick={ () => navigate('/customer/checkout') }
+        id="customer_products__button-cart"
         disabled={ totalPrice <= 0 }
-        id="customer_products__checkout-bottom-value"
+        type="button"
       >
-        {`${totalPrice.toFixed(2).replace('.', ',')}`}
+        Ver Carrinho R$
+        <span data-testid="customer_products__checkout-bottom-value">
+          {`${totalPrice.toFixed(2).replace('.', ',')}`}
+        </span>
       </Button>
     </div>
   );
