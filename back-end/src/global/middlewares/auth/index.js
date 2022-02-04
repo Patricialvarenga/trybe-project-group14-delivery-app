@@ -1,7 +1,6 @@
 require('dotenv').config();
 const { UNAUTHORIZED } = require('http-status-codes').StatusCodes;
 const jwt = require('jsonwebtoken');
-const path = require('path');
 const fs = require('fs');
 const { user } = require('../../../database/models');
 const messages = require('../../error/messages');
@@ -12,7 +11,7 @@ const jwtConfig = {
 };
 
 const secretKey = fs
-  .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8');
+  .readFileSync('./back-end-link/jwt.evaluation.key', 'utf-8');
 
 const createToken = (body) => {
   const token = jwt.sign({ data: body }, secretKey, jwtConfig);

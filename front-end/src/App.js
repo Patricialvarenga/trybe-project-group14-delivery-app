@@ -18,13 +18,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={ <Navigate to="/login" /> } />
-        <Route path="/login" element={ <Login /> } />
         <Route path="/admin" element={ <Admin /> } />
+        <Route path="/login" element={ <Login /> } />
+        <Route path="/register" element={ <Register /> } />
         <Route path="/customer/products" element={ <Products /> } />
         <Route path="/customer/checkout" element={ <Checkout /> } />
         <Route path="/customer/orders" element={ <CustomerOrders /> } />
         <Route path="/customer/orders/details" element={ <CustomerOrdersDetails /> } />
-        <Route path="/register" element={ <Register /> } />
         <Route path="/seller/orders" element={ <SellerOrders /> } />
         <Route path="/seller/orders/details" element={ <SellerOrdersDetails /> } />
       </Routes>
