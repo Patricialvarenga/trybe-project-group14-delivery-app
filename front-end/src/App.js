@@ -5,10 +5,12 @@ import {
   Admin,
   Checkout,
   CustomerOrders,
-  Drinks,
+  CustomerOrdersDetails,
+  Products,
   Login,
   Register,
-  Seller,
+  SellerOrders,
+  SellerOrdersDetails,
 } from './pages';
 
 function App() {
@@ -17,13 +19,14 @@ function App() {
       <Routes>
         <Route path="/" element={ <Navigate to="/login" /> } />
         <Route path="/login" element={ <Login /> } />
-        <Route path="/admin/manage" element={ <Admin /> } />
-        <Route path="/customer/products" element={ <Drinks /> } />
-        <Route path="/checkout" element={ <Checkout /> } />
-        <Route path="/customerorders" element={ <CustomerOrders /> } />
         <Route path="/register" element={ <Register /> } />
-        <Route path="/seller" element={ <Seller /> } />
-        <Route path="/checkout" element={ <Checkout /> } />
+        <Route path="/admin/manage" element={ <Admin /> } />
+        <Route path="/customer/products" element={ <Products /> } />
+        <Route path="/customer/checkout" element={ <Checkout /> } />
+        <Route path="/customer/orders" element={ <CustomerOrders /> } />
+        <Route path="/customer/orders/details" element={ <CustomerOrdersDetails /> } />
+        <Route path="/seller/orders" element={ <SellerOrders /> } />
+        <Route path="/seller/orders/details" element={ <SellerOrdersDetails /> } />
       </Routes>
     </BrowserRouter>
   );

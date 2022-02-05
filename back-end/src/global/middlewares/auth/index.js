@@ -12,7 +12,7 @@ const jwtConfig = {
 };
 
 const secretKey = fs
-    .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8');
+  .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8').trim();
 
 const createToken = (body) => {
   const secretKey = fs
