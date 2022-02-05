@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import AppContext from '../../context/AppContext';
 import TableList from '../../components/TableList';
@@ -16,36 +16,47 @@ function Checkout() {
     setTotalPrice,
   } = useContext(AppContext);
 
+  const navigate = useNavigate();
+
   const [inputCheckout, setInputCheckout] = useState({
     deliveryAddress: '',
     deliveryNumber: '',
-    sellerId: '',
+    sellerId: 1,
   });
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const Authorization = 'Authorization';
-      axios.defaults.headers.common[Authorization] = token;
-      await axios.post('http://localhost:3000/sales', {
-        products: [...inputCheckout],
-        totalPrice,
+      const api = axios.create({
+        baseURL: 'http://localhost:3001',
+        headers: {
+          authorization: token,
+        },
       });
+
+      const data = {
+        totalPrice: parseFloat(totalPrice.toFixed(2)),
+        products: [...bagItens],
+        ...inputCheckout,
+      };
+
+      const { data: { id } } = await api.post('/sales', data);
+
       Swal.fire({
         title: 'Pronto! :D',
         html: 'Pedido finalizado com sucesso',
-        icon: 'sucess',
+        icon: 'success',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
       });
-      return <Navigate to="/order-details" />;
+      return navigate(`/customer/orders/${id}`);
     } catch ({ message }) {
       Swal.fire({
         title: 'Error!',
         html: `<p>${message}</p>`,
         icon: 'warning',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
       });
     }
   }
@@ -62,10 +73,15 @@ function Checkout() {
 
   function handleChange({ target }) {
     const { name, value } = target;
+    const int = parseInt;
+
+    const newValue = (name === 'sellerId')
+      ? int(value)
+      : value;
 
     setInputCheckout({
       ...inputCheckout,
-      [name]: value,
+      [name]: newValue,
     });
   }
 
@@ -121,9 +137,12 @@ function Checkout() {
           <select
             data-testid="customer_checkout__select-seller"
             onChange={ handleChange }
+            name="sellerId"
           >
             P.Vendedora Responsável:
             <option value="1">Elias Forte</option>
+            <option value="2">Michel Pereira</option>
+            <option value="3">Gabriel Medeiros</option>
           </select>
           <label htmlFor="deliveryAddress">
             Endereço
@@ -145,6 +164,7 @@ function Checkout() {
           </label>
           <button
             data-testid="customer_checkout__button-submit-order"
+            disabled={ totalPrice <= 0 }
             type="submit"
           >
             Finalizar o pedido
