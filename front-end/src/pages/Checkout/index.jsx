@@ -77,7 +77,7 @@ function Checkout() {
 
   return (
     <div>
-      <NavBar user="Amanda" />
+      <NavBar />
       <div>
         <h3>Finalizar pedido</h3>
         {
