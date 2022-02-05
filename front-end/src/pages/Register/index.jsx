@@ -1,10 +1,11 @@
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
-
-import Joi from 'joi';
 import axios from 'axios';
+import Joi from 'joi';
 
 import Button from '../../components/Button';
+
+import context from '../../context/AppContext';
 
 const nameLimit = 12;
 const passwordLimit = 6;
@@ -27,6 +28,8 @@ function validate(value) {
 
 export default function Register() {
   const navigate = useNavigate();
+
+  const { setUserData, setToken } = useContext(context);
 
   const [invalid, setInvalid] = useState(true);
   const [error, setError] = useState('');
@@ -65,7 +68,9 @@ export default function Register() {
     const url = `${host}/${path}`;
 
     try {
-      await axios.post(url, register);
+      const { data: { token, ...user } } = await axios.post(url, register);
+      setUserData(user);
+      setToken(token);
       navigate('/customer/products');
     } catch (err) {
       showError(err.message);
@@ -79,6 +84,7 @@ export default function Register() {
           data-testid="common_register__input-name"
           name="name"
           type="text"
+          placeholder="Seu nome"
           onChange={ handleChange }
         />
 

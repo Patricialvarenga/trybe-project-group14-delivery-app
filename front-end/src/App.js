@@ -4,12 +4,13 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import {
   Admin,
   Checkout,
-  CustomerDetails,
   CustomerOrders,
-  Drinks,
+  CustomerOrdersDetails,
+  Products,
   Login,
   Register,
-  Seller,
+  SellerOrders,
+  SellerOrdersDetails,
 } from './pages';
 
 function App() {
@@ -17,14 +18,15 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={ <Navigate to="/login" /> } />
-        <Route path="/login" element={ <Login /> } />
         <Route path="/admin" element={ <Admin /> } />
-        <Route path="/customer/products" element={ <Drinks /> } />
-        <Route path="/checkout" element={ <Checkout /> } />
-        <Route path="/customerdetails" element={ <CustomerDetails /> } />
-        <Route path="/customerorders" element={ <CustomerOrders /> } />
+        <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
-        <Route path="/seller" element={ <Seller /> } />
+        <Route path="/customer/products" element={ <Products /> } />
+        <Route path="/customer/checkout" element={ <Checkout /> } />
+        <Route path="/customer/orders" element={ <CustomerOrders /> } />
+        <Route path="/customer/orders/details" element={ <CustomerOrdersDetails /> } />
+        <Route path="/seller/orders" element={ <SellerOrders /> } />
+        <Route path="/seller/orders/details" element={ <SellerOrdersDetails /> } />
       </Routes>
     </BrowserRouter>
   );

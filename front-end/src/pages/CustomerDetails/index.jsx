@@ -1,5 +1,5 @@
-import { React } from 'react';
+import React from 'react';
 
-export default function CustomerDetails() {
-  return <h1>Customer Details</h1>;
+export default function CustomerOrders() {
+  return <h1>Customer Orders</h1>;
 }
