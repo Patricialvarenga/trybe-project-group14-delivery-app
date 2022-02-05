@@ -3,7 +3,8 @@ const service = require('../../service/sales');
 
 module.exports = async (req, res, next) => {
   try {
-    const { id } = req.user;
+    const { id } = req.params;
+    console.log(id);
     const sale = await service.findById(id);
 
     return res.status(OK).json(sale);
