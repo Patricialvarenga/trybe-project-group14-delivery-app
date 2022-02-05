@@ -27,20 +27,15 @@ function Checkout() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const api = axios.create({
-        baseURL: 'http://localhost:3001',
-        headers: {
-          authorization: token,
-        },
-      });
-
       const data = {
         totalPrice: parseFloat(totalPrice.toFixed(2)),
         products: [...bagItens],
         ...inputCheckout,
       };
-
-      const { data: { id } } = await api.post('/sales', data);
+      console.log('aqui', data.totalPrice);
+      const Authorization = 'Authorization';
+      axios.defaults.headers.common[Authorization] = token;
+      const { data: { id } } = await axios.post('http://localhost:3001/sales', data);
 
       Swal.fire({
         title: 'Pronto! :D',
