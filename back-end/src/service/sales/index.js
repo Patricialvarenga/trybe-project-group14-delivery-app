@@ -1,4 +1,4 @@
-const { sale, salesProduct } = require('../../database/models');
+const { sale, salesProduct, user } = require('../../database/models');
 const { ApiError: { NewError } } = require('../../global/error/apiError');
 const { SALE_NOT_EXIST_404 } = require('../../global/error/messages');
 
@@ -20,7 +20,14 @@ const create = async ({
 };
 
 const findById = async (saleId) => {
-    const foundedSale = await sale.findByPk(saleId);
+    // const foundedSale = await sale.findByPk(saleId);
+
+    const foundedSale = await sale.findAll({
+      include: [{ model: user, as: 'seller', attributes: { exclude: ['password'] } },
+              { model: user, as: 'customer', attributes: { exclude: ['password'] } }],
+      where: { id: saleId },
+    });
+
     if (!foundedSale) return NewError(SALE_NOT_EXIST_404);
     return foundedSale;
 };
