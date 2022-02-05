@@ -21,7 +21,7 @@ function Checkout() {
   const [inputCheckout, setInputCheckout] = useState({
     deliveryAddress: '',
     deliveryNumber: '',
-    sellerId: 1,
+    sellerId: '2',
   });
 
   async function handleSubmit(e) {
@@ -69,20 +69,6 @@ function Checkout() {
     }
 
     return setBagItens(removeItem);
-  }
-
-  function handleChange({ target }) {
-    const { name, value } = target;
-    const int = parseInt;
-
-    const newValue = (name === 'sellerId')
-      ? int(value)
-      : value;
-
-    setInputCheckout({
-      ...inputCheckout,
-      [name]: newValue,
-    });
   }
 
   const allPrice = useCallback(async () => {
@@ -136,13 +122,14 @@ function Checkout() {
         <form action="POST" onSubmit={ (e) => handleSubmit(e) }>
           <select
             data-testid="customer_checkout__select-seller"
-            onChange={ handleChange }
+            onClick={ ({ target }) => setInputCheckout({
+              ...inputCheckout, sellerId: target.value,
+            }) }
             name="sellerId"
           >
             P.Vendedora Responsável:
-            <option value="1">Elias Forte</option>
-            <option value="2">Michel Pereira</option>
-            <option value="3">Gabriel Medeiros</option>
+            <option value="2">Fulana Pereira</option>
+
           </select>
           <label htmlFor="deliveryAddress">
             Endereço
@@ -150,7 +137,9 @@ function Checkout() {
               data-testid="customer_checkout__input-address"
               name="deliveryAddress"
               type="text"
-              onClick={ handleChange }
+              onChange={ ({ target }) => setInputCheckout({
+                ...inputCheckout, deliveryAddress: target.value,
+              }) }
             />
           </label>
           <label htmlFor="Número">
@@ -159,7 +148,9 @@ function Checkout() {
               data-testid="customer_checkout__input-addressNumber"
               name="deliveryNumber"
               type="text"
-              onClick={ handleChange }
+              onChange={ ({ target }) => setInputCheckout({
+                ...inputCheckout, deliveryNumber: target.value,
+              }) }
             />
           </label>
           <button
