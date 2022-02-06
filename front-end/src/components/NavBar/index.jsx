@@ -25,6 +25,7 @@ export default function NavBar() {
       <Link
         to="/"
         data-testid="customer_products__element-navbar-link-logout"
+        onClick={ () => localStorage.clear() }
       >
         Sair
       </Link>

@@ -8,7 +8,16 @@ import AppContext from '../../context/AppContext';
 import TableList from '../../components/TableList';
 
 export default function CustomerOrdersDetails() {
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState({
+    status: '',
+    products: [],
+    seller: {
+      id: 0,
+      name: '',
+      email: '',
+      role: '',
+    },
+  });
   console.log('state aqui', order);
   const { token } = useContext(AppContext);
   const { id } = useParams();
@@ -17,14 +26,23 @@ export default function CustomerOrdersDetails() {
       try {
         const Authorization = 'Authorization';
         axios.defaults.headers.common[Authorization] = token;
-        const data = await axios.get(`http://localhost:3001/sales/details/${id}`);
-        setOrder(data.data);
+        const { data } = await axios.get(`http://localhost:3001/sales/details/${id}`);
+        const newValue = Number(data.totalPrice).toFixed(2).replace('.', ',');
+        setOrder({ ...data,
+          products: [...data.products],
+          seller: {
+            ...data.seller,
+          },
+          totalPrice: newValue,
+        });
       } catch (response) {
         console.log(response);
         Swal.fire(response);
       }
     }, [id, token],
   );
+
+  const dataTes = 'customer_order_details__element-order-details-label-delivery-status';
 
   useEffect(() => {
     renderOrder();
@@ -47,16 +65,20 @@ export default function CustomerOrdersDetails() {
         <p
           data-testid="customer_order_details__element-order-details-label-order-date"
         >
-          { `${order.seller.name}` }
+          { `${moment(order.saleDate).format('DD/MM/YYYY')}` }
         </p>
         <p
-          data-testid={ `
-          customer_order_details__element-order-details-label-delivery-status` }
+          data-testid={ dataTes }
         >
-          { `${moment(order.saleDate, 'DD/MM/YYYY')}` }
+          { `${order.status}` }
         </p>
-        <p>{ `${order.status}` }</p>
-        <button type="button">Marcar com entregue</button>
+        <button
+          type="button"
+          disabled={ order.status !== 'A caminho' }
+          data-testid="customer_order_details__button-delivery-check"
+        >
+          Marcar com entregue
+        </button>
       </div>
       {
         order.products.map((item, index) => (
@@ -72,12 +94,12 @@ export default function CustomerOrdersDetails() {
           </div>
         ))
       }
-      <h3
-        data-testid={ `
-        customer_order_details__element-order-total-price-${order.id}` }
+      <button
+        type="button"
+        data-testid="customer_order_details__element-order-total-price"
       >
         { order.totalPrice }
-      </h3>
+      </button>
     </div>
   );
 }

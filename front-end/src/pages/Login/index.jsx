@@ -31,21 +31,32 @@ export default function Login() {
     }
   }
 
+  const routes = {
+    customer: '/customer/products',
+    admin: '/admin/manage',
+    seller: '/seller/orders',
+  };
+
   useEffect(() => {
-    localStorage.clear();
-  }, []);
+    if (localStorage.getItem('user')) {
+      const { role } = JSON.parse(localStorage.getItem('user'));
+      navigate(routes[role]);
+    }
+  }, [navigate, routes]);
 
   async function postUserData(email, password) {
     try {
-      const { status, data: { token, ...user } } = await axios.post('http://localhost:3001/login', {
+      const { status, data } = await axios.post('http://localhost:3001/login', {
         email,
         password,
       });
+      console.log(data);
+      localStorage.setItem('user', JSON.stringify({ ...data }));
       const STATUS_OK = 200;
       if (status === STATUS_OK) {
-        setUserData(user);
-        setToken(token);
-        navigate('/customer/products');
+        setUserData(data);
+        setToken(data.token);
+        navigate(routes[data.role]);
       }
     } catch ({ response: { data: { message } } }) {
       setState({ ...state, errorMessage: message });

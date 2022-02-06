@@ -9,7 +9,12 @@ import Button from '../../components/Button';
 import ProductCard from '../../components/ProductCard';
 
 export default function Products() {
-  const { token, bagItens, userData, setTotalPrice, totalPrice } = useContext(context);
+  const {
+    token,
+    bagItens,
+    setTotalPrice,
+    totalPrice,
+    setToken } = useContext(context);
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
@@ -20,7 +25,6 @@ export default function Products() {
     axios
       .get('http://localhost:3001/products', config)
       .then(({ data }) => {
-        localStorage.user = JSON.stringify({ ...userData, token });
         setProducts(data);
       })
       .catch(console.err);
@@ -52,7 +56,11 @@ export default function Products() {
 
   useEffect(() => {
     allPrice();
-  }, [allPrice]);
+    if (localStorage.getItem('user')) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      setToken(user.token);
+    }
+  }, [allPrice, setToken]);
 
   useEffect(getDrinks, [token]);
 
