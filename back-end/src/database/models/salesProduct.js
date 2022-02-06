@@ -36,6 +36,5 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'sale_id'
     })
   }
-
   return SalesProduct;
 };
