@@ -59,8 +59,4 @@ module.exports = {
   createToken,
   verifyToken,
   verifyRoleAdm,
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 70003fb62148561f99646430e355754a24909a2c
