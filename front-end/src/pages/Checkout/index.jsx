@@ -33,7 +33,6 @@ function Checkout() {
         products: [...bagItens],
         ...inputCheckout,
       };
-      console.log('aqui', data.totalPrice);
       const Authorization = 'Authorization';
       axios.defaults.headers.common[Authorization] = token;
       const { data: { id } } = await axios.post('http://localhost:3001/sales', data);

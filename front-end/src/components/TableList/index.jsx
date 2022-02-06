@@ -22,7 +22,7 @@ export default function TableList(props) {
           <td>Quantidade</td>
           <td>Valor Unitário</td>
           <td>Sub-total</td>
-          <td>Remover Item</td>
+          {/* { (screen === 'checkout') && <td>Remover Item</td> } */}
         </tr>
       </thead>
       <tbody>
