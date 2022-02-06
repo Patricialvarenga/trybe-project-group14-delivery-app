@@ -16,6 +16,7 @@ function Checkout() {
     setTotalPrice,
   } = useContext(AppContext);
 
+  // test de PR
   const navigate = useNavigate();
 
   const [inputCheckout, setInputCheckout] = useState({
