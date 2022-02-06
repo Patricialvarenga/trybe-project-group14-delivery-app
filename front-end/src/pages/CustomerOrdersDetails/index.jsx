@@ -18,7 +18,6 @@ export default function CustomerOrdersDetails() {
       role: '',
     },
   });
-  console.log('state aqui', order);
   const { token } = useContext(AppContext);
   const { id } = useParams();
   const renderOrder = useCallback(
