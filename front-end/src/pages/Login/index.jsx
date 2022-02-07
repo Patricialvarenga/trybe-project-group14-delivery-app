@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../context/AppContext';
@@ -11,7 +11,7 @@ export default function Login() {
     isPasswordValid: false,
     errorMessage: '',
   });
-  const { setToken, setUserData } = useContext(AppContext);
+  const { setUserData, setToken } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -31,11 +31,18 @@ export default function Login() {
     }
   }
 
-  function redirector(role) {
-    if (role === 'administrator') navigate('/admin/manage');
-    else if (role === 'customer') navigate('/customer/products');
-    else if (role === 'seller') navigate('/seller/orders');
-  }
+  const routes = {
+    customer: '/customer/products',
+    admin: '/admin/manage',
+    seller: '/seller/orders',
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      const { role } = JSON.parse(localStorage.getItem('user'));
+      navigate(routes[role]);
+    }
+  }, [navigate, routes]);
 
   async function postUserData(email, password) {
     try {
@@ -43,11 +50,13 @@ export default function Login() {
         email,
         password,
       });
+      console.log(data);
+      localStorage.setItem('user', JSON.stringify({ ...data }));
       const STATUS_OK = 200;
       if (status === STATUS_OK) {
         setUserData(data);
         setToken(data.token);
-        redirector(data.role);
+        navigate(routes[data.role]);
       }
     } catch ({ response: { data: { message } } }) {
       setState({ ...state, errorMessage: message });
