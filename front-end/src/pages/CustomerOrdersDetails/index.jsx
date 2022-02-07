@@ -54,7 +54,7 @@ export default function CustomerOrdersDetails() {
         <p
           data-testid="customer_order_details__element-order-details-label-order-id"
         >
-          { `Pedido 0${order.id}` }
+          { `Pedido: ${order.id}` }
         </p>
         <p
           data-testid="customer_order_details__element-order-details-label-seller-name"
@@ -93,12 +93,12 @@ export default function CustomerOrdersDetails() {
           </div>
         ))
       }
-      <button
+      <div
         type="button"
         data-testid="customer_order_details__element-order-total-price"
       >
         { order.totalPrice }
-      </button>
+      </div>
     </div>
   );
 }

@@ -73,6 +73,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return Sale;
 };
-
-// belongsTo
-// hasMany

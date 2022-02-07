@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 module.exports = (sequelize, DataTypes) => {
-  const SalesProduct = sequelize.define('salesProduct', {
+  const SalesProduct = sequelize.define('salesProducts', {
     saleId: {
       primaryKey: true,
       constraint: true,
@@ -19,24 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     timestamps: false,
-    tableName: 'sales_products',
+    tableName: 'salesProducts',
     underscored:true
   })
-
-  SalesProduct.associate = (models) => {
-    models.product.belongsToMany(models.sale, {
-      through: SalesProduct,
-      as: 'sales',
-      foreignKey: 'productId',
-      otherKey: 'saleId'
-    })
-    models.sale.belongsToMany(models.product, {
-      through: SalesProduct,
-      as: 'products',
-      foreignKey: 'saleId',
-      otherKey: 'productId'
-    })
-  }
 
   SalesProduct.associate = (models) => {
     models.product.belongsToMany(models.sale, {

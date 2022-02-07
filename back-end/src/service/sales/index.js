@@ -1,4 +1,4 @@
-const { sale, salesProduct, user, product } = require('../../database/models');
+const { sale, salesProducts, user, product } = require('../../database/models');
 const { ApiError: { NewError } } = require('../../global/error/apiError');
 const { SALE_NOT_EXIST_404 } = require('../../global/error/messages');
 
@@ -10,7 +10,7 @@ const create = async ({
         );
     const saleId = newSale.dataValues.id;
     const newSalesProducts = products.map(async ({ id, quantityItens }) => {
-        const register = await salesProduct.create({
+        const register = await salesProducts.create({
           quantity: quantityItens, saleId, productId: id });
         return register;
     });
