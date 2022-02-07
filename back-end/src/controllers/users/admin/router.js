@@ -5,6 +5,6 @@ const auth = require('../../../global/middlewares/auth');
 
 const router = express.Router({ mergeParams: true });
 
-router.post('/', auth.verifyRoleAdm, validation.register, create);
+router.post('/', auth.verifyRoleAdm, validation.registerByAdm, create);
 
 module.exports = router;
