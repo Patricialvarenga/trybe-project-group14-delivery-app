@@ -18,6 +18,7 @@ export default function Products() {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
+  console.log(products);
 
   function getDrinks() {
     const config = { headers: { authorization: token } };
@@ -55,11 +56,11 @@ export default function Products() {
   }, [bagItens, setTotalPrice]);
 
   useEffect(() => {
-    allPrice();
     if (localStorage.getItem('user')) {
       const user = JSON.parse(localStorage.getItem('user'));
       setToken(user.token);
     }
+    allPrice();
   }, [allPrice, setToken]);
 
   useEffect(getDrinks, [token]);

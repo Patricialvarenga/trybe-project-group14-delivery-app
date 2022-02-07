@@ -42,7 +42,7 @@ export default function Login() {
       const { role } = JSON.parse(localStorage.getItem('user'));
       navigate(routes[role]);
     }
-  }, [navigate, routes]);
+  }, [navigate]);
 
   async function postUserData(email, password) {
     try {

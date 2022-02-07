@@ -8,7 +8,7 @@ import AllOrders from '../../components/AllOrders';
 export default function CustomerOrders() {
   const [orders, setOrders] = useState([]);
   const { token } = useContext(AppContext);
-  console.log('state aqui', orders);
+
   const renderOrders = useCallback(
     async () => {
       try {
@@ -31,14 +31,14 @@ export default function CustomerOrders() {
     <div>
       <NavBar />
       { orders.length && orders.map((order) => (
-        <div key={ order.id }>
-          <AllOrders
-            totalValue={ Number(order.totalPrice).toFixed(2).replace('.', ',') }
-            date={ order.saleDate }
-            status={ order.status }
-            id={ order.id }
-          />
-        </div>
+        <AllOrders
+          key={ order.id }
+          totalValue={ Number(order.totalPrice).toFixed(2).replace('.', ',') }
+          date={ order.saleDate }
+          status={ order.status }
+          screen="orders"
+          id={ order.id }
+        />
       ))}
     </div>
   );
