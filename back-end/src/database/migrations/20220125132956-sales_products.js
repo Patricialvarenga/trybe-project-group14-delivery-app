@@ -30,6 +30,7 @@ module.exports = {
       quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        defaultValue: 0,
       }
     })
   },

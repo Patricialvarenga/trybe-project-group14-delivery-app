@@ -10,22 +10,24 @@ const create = async ({
         );
     const saleId = newSale.dataValues.id;
     const newSalesProducts = products.map(async ({ id, quantityItens }) => {
-        const register = await salesProduct.create({ 
+        const register = await salesProduct.create({
           quantity: quantityItens, saleId, productId: id });
         return register;
     });
 
     await Promise.all(newSalesProducts);
-    return newSale;
+    return newSale.dataValues;
 };
 
-const findById = async (id) => {
-    const foundedSale = await sale.findByPk(id, { include: [{
-      model: product, as: 'products', through: { attributes: ['quantity'] },
-    }, { 
-      model: user, as: 'seller', attributes: { exclude: ['password'] },
-    }] });
-    console.log(foundedSale);
+const findById = async (saleId) => {
+    const foundedSale = await sale.findOne({
+      include: [{ model: user, as: 'seller', attributes: { exclude: ['password'] } },
+                { model: user, as: 'customer', attributes: { exclude: ['password'] } },
+                { model: product, as: 'products' },
+              ],
+      where: { id: saleId },
+    });
+
     if (!foundedSale) return NewError(SALE_NOT_EXIST_404);
     return foundedSale;
 };
