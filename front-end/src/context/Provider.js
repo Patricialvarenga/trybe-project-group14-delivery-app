@@ -4,6 +4,7 @@ import AppContext from './AppContext';
 
 export default function Provider({ children }) {
   const [userData, setUserData] = useState({});
+  console.log(userData);
   const [bagItens, setBagItens] = useState([]);
   const [token, setToken] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);

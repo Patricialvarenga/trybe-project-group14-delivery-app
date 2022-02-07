@@ -25,7 +25,6 @@ const findById = async (id) => {
     }, { 
       model: user, as: 'seller', attributes: { exclude: ['password'] },
     }] });
-    console.log(foundedSale);
     if (!foundedSale) return NewError(SALE_NOT_EXIST_404);
     return foundedSale;
 };
@@ -46,7 +45,7 @@ const findAll = async ({ id, role }) => {
 };
 
 module.exports = {
-    create,
-    findById,
-    findAll,
+  create,
+  findById,
+  findAll,
 };

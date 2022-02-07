@@ -50,7 +50,6 @@ export default function Login() {
         email,
         password,
       });
-      console.log(data);
       localStorage.setItem('user', JSON.stringify({ ...data }));
       const STATUS_OK = 200;
       if (status === STATUS_OK) {
