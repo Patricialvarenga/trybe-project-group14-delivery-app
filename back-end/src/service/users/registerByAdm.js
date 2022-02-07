@@ -5,7 +5,7 @@ const { user } = require('../../database/models');
 const auth = require('../../global/middlewares/auth');
 const { USER__EXIST_409 } = require('../../global/error/messages');
 
-const register = async (infoUser) => {
+const registerByAdm = async (infoUser) => {
   const userExist = await user.findOne({
     where: { [Op.or]: [{ email: infoUser.email }, { name: infoUser.name }] } });
 
@@ -23,4 +23,4 @@ const register = async (infoUser) => {
     };
   };
 
-module.exports = register;
+  module.exports = registerByAdm;

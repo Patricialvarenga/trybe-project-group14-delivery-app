@@ -13,8 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     urlImage: { type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: '',
+      defaultValue: ''
     },
-  }, { timestamps: false });
+  },{
+    timestamps: false,
+    tableName: 'products',
+    underscored:true
+  })
+
   return Product;
 };

@@ -12,22 +12,25 @@ const jwtConfig = {
 };
 
 const secretKey = fs
-  .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8').trim();
+    .readFileSync(path.normalize(`${__dirname}../../../../../jwt.evaluation.key`), 'utf-8').trim();
 
-const createToken = (body) => {
-  const token = jwt.sign({ data: body }, secretKey, jwtConfig);
+const createToken = (newUserData) => {
+  const { id, email, role } = newUserData;
+  const token = jwt.sign({ data: { id, email, role } }, secretKey, jwtConfig);
   return token;
 };
 
 const verifyToken = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
+  
     if (!authorization) {
       return res.status(UNAUTHORIZED).json(messages.MISSING_TOKEN_401);
     }
     const decoded = jwt.verify(authorization, secretKey);
     const { id, email, role } = decoded.data;
     const foundedEmail = await user.findOne({ where: { email } });
+
     if (!foundedEmail) return next(messages.JWT_MALFORMED_401);
     req.user = { id, email, role };
     next();
@@ -40,13 +43,15 @@ const verifyToken = async (req, res, next) => {
 const verifyRoleAdm = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
+
     if (!authorization) {
       return res.status(UNAUTHORIZED).json(messages.MISSING_TOKEN_401);
     }
-    const decoded = jwt.verify(authorization, process.env.SECRET);
-    const { email } = decoded.data;
+
+    const decoded = jwt.verify(authorization, secretKey);
+    const { email, role } = decoded.data;
     const foundedEmail = await user.findOne({ where: { email } });
-    if (foundedEmail.role !== authorization) return next(messages.UNAUTHORIZED_ROLE);
+    if (foundedEmail.role !== role) return next(messages.UNAUTHORIZED_ROLE);
    
     next();
   } catch (err) {
@@ -59,8 +64,4 @@ module.exports = {
   createToken,
   verifyToken,
   verifyRoleAdm,
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 70003fb62148561f99646430e355754a24909a2c

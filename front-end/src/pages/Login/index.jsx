@@ -33,7 +33,7 @@ export default function Login() {
 
   const routes = {
     customer: '/customer/products',
-    admin: '/admin/manage',
+    administrator: '/admin/manage',
     seller: '/seller/orders',
   };
 

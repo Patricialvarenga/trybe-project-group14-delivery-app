@@ -13,13 +13,20 @@ const SCHEMARegister = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
-const SHEMAProduct = Joi.object({
+const SCHEMARegisterByAdm = Joi.object({
+  name: Joi.string().min(12).required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+  role: Joi.string().required(),
+});
+
+const SCHEMAProduct = Joi.object({
   name: Joi.string().required(),
   price: Joi.number().precision(2).positive().required(),
   urlImage: Joi.string().required(),
 });
 
-const SHEMASale = Joi.object({
+const SCHEMASale = Joi.object({
   totalPrice: Joi.number().precision(2).positive().required(),
   deliveryAddress: Joi.string().required(),
   deliveryNumber: Joi.string().required(),
@@ -39,14 +46,20 @@ const register = rescue(async (req, _res, next) => {
   next();
 });
 
+const registerByAdm = rescue(async (req, _res, next) => {
+  const { error } = SCHEMARegisterByAdm.validate(req.body);
+  if (error) return next({ message: error.message, status: BAD_REQUEST });
+  next();
+});
+
 const product = rescue(async (req, _res, next) => {
-  const { error } = SHEMAProduct.validate(req.body);
+  const { error } = SCHEMAProduct.validate(req.body);
   if (error) return next({ message: error.message, status: BAD_REQUEST });
   next();
 });
 
 const sale = rescue(async (req, _res, next) => {
-  const { error } = SHEMASale.validate(req.body);
+  const { error } = SCHEMASale.validate(req.body);
   if (error) return next({ message: error.message, status: BAD_REQUEST });
   next();
 });
@@ -54,6 +67,7 @@ const sale = rescue(async (req, _res, next) => {
 module.exports = {
   login,
   register,
+  registerByAdm,
   product,
   sale,
 };
