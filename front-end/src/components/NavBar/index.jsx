@@ -1,10 +1,16 @@
 import React, { useContext } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import context from '../../context/AppContext';
 
-export default function NavBar() {
+export default function NavBarSeller() {
   const { userData: { name } } = useContext(context);
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
 
   return (
     <div>
@@ -23,13 +29,13 @@ export default function NavBar() {
       <span data-testid="customer_products__element-navbar-user-full-name">
         { name }
       </span>
-      <Link
-        to="/"
+      <button
+        type="button"
         data-testid="customer_products__element-navbar-link-logout"
-        onClick={ () => localStorage.clear() }
+        onClick={ () => handleRedirect() }
       >
         Sair
-      </Link>
+      </button>
     </div>
   );
 }

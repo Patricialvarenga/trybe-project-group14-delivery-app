@@ -23,15 +23,15 @@ function App() {
         <Route path="/admin/manage" element={ <Admin /> } />
         <Route path="/customer/products" element={ <Products /> } />
         <Route path="/customer/checkout" element={ <Checkout /> } />
-        <Route path="customer/orders/" element={ <CustomerOrders /> } />
+        <Route path="/seller/orders" element={ <SellerOrders /> } />
+        <Route path="/seller/orders/:id" element={ <SellerOrdersDetails /> } />
+        <Route path="/customer/orders/" element={ <CustomerOrders /> } />
         <Route
           path="/customer/orders/:id"
           element={
             <CustomerOrdersDetails />
           }
         />
-        <Route path="/seller/orders" element={ <SellerOrders /> } />
-        <Route path="/seller/orders/details" element={ <SellerOrdersDetails /> } />
       </Routes>
     </BrowserRouter>
   );

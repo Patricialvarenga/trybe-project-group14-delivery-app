@@ -2,10 +2,9 @@ import axios from 'axios';
 import moment from 'moment';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import NavBar from '../../components/NavBar';
 import AppContext from '../../context/AppContext';
 import TableList from '../../components/TableList';
+import NavBar from '../../components/NavBarSeller';
 
 export default function CustomerOrdersDetails() {
   const [order, setOrder] = useState({
@@ -27,6 +26,7 @@ export default function CustomerOrdersDetails() {
         axios.defaults.headers.common[Authorization] = token;
         const { data } = await axios.get(`http://localhost:3001/sales/details/${id}`);
         const newValue = Number(data.totalPrice).toFixed(2).replace('.', ',');
+        console.log(data);
         setOrder({ ...data,
           products: [...data.products],
           seller: {
@@ -36,7 +36,6 @@ export default function CustomerOrdersDetails() {
         });
       } catch (response) {
         console.log(response);
-        Swal.fire(response);
       }
     }, [id, token],
   );
@@ -73,7 +72,7 @@ export default function CustomerOrdersDetails() {
         </p>
         <button
           type="button"
-          disabled={ order.status !== 'A caminho' }
+          disabled={ order.status !== 'Preparando' }
           data-testid="customer_order_details__button-delivery-check"
         >
           Marcar com entregue

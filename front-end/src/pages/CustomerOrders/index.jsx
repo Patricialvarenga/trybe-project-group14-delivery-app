@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
 import NavBar from '../../components/NavBar';
 import AppContext from '../../context/AppContext';
 import AllOrders from '../../components/AllOrders';
@@ -18,7 +17,6 @@ export default function CustomerOrders() {
         setOrders(data);
       } catch (response) {
         console.log(response);
-        Swal.fire(response);
       }
     }, [token],
   );

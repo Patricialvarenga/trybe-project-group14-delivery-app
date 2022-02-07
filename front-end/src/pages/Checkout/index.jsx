@@ -36,14 +36,6 @@ function Checkout() {
       const Authorization = 'Authorization';
       axios.defaults.headers.common[Authorization] = token;
       const { data: { id } } = await axios.post('http://localhost:3001/sales', data);
-
-      Swal.fire({
-        title: 'Pronto! :D',
-        html: 'Pedido finalizado com sucesso',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 2000,
-      });
       return navigate(`/customer/orders/${id}`);
     } catch ({ message }) {
       Swal.fire({
