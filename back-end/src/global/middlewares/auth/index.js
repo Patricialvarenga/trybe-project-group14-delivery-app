@@ -27,7 +27,6 @@ const verifyToken = async (req, res, next) => {
     if (!authorization) {
       return res.status(UNAUTHORIZED).json(messages.MISSING_TOKEN_401);
     }
-
     const decoded = jwt.verify(authorization, secretKey);
     const { id, email, role } = decoded.data;
     const foundedEmail = await user.findOne({ where: { email } });

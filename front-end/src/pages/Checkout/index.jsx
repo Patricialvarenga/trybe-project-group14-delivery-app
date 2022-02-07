@@ -1,7 +1,8 @@
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Navigate } from 'react-router-dom';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar';
 import AppContext from '../../context/AppContext';
 import TableList from '../../components/TableList';
@@ -76,7 +77,7 @@ function Checkout() {
 
   return (
     <div>
-      <NavBar user="Amanda" />
+      <NavBar />
       <div>
         <h3>Finalizar pedido</h3>
         {
