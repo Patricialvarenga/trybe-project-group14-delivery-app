@@ -15,11 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: ''
     },
-  },{
+  }, {
     timestamps: false,
     tableName: 'products',
     underscored:true
-  })
-
+  });
   return Product;
 };
