@@ -18,9 +18,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={ <Navigate to="/login" /> } />
-        <Route path="/admin" element={ <Admin /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
+        <Route path="/admin/manage" element={ <Admin /> } />
         <Route path="/customer/products" element={ <Products /> } />
         <Route path="/customer/checkout" element={ <Checkout /> } />
         <Route path="customer/orders/" element={ <CustomerOrders /> } />
