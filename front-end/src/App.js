@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import {
   Admin,
   Checkout,
-  CustomerOrders,
   CustomerOrdersDetails,
   Products,
   Login,
@@ -12,6 +11,7 @@ import {
   SellerOrders,
   SellerOrdersDetails,
 } from './pages';
+import CustomerOrders from './pages/CustomerOrders';
 
 function App() {
   return (
@@ -23,8 +23,13 @@ function App() {
         <Route path="/admin/manage" element={ <Admin /> } />
         <Route path="/customer/products" element={ <Products /> } />
         <Route path="/customer/checkout" element={ <Checkout /> } />
-        <Route path="/customer/orders" element={ <CustomerOrders /> } />
-        <Route path="/customer/orders/details" element={ <CustomerOrdersDetails /> } />
+        <Route path="customer/orders/" element={ <CustomerOrders /> } />
+        <Route
+          path="/customer/orders/:id"
+          element={
+            <CustomerOrdersDetails />
+          }
+        />
         <Route path="/seller/orders" element={ <SellerOrders /> } />
         <Route path="/seller/orders/details" element={ <SellerOrdersDetails /> } />
       </Routes>

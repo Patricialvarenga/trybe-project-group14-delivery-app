@@ -2,7 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function TableList(props) {
-  const { key, price, quantityItens, name, screen, id } = props;
+  const { screen, index, id, name, price, quantityItens } = props;
+
+  function formatPrice(number) {
+    let result = number;
+    if (typeof number === 'number') {
+      result = number.toFixed(2);
+    }
+
+    return result.replace('.', ',');
+  }
+
   return (
     <table>
       <thead>
@@ -12,52 +22,44 @@ export default function TableList(props) {
           <td>Quantidade</td>
           <td>Valor Unitário</td>
           <td>Sub-total</td>
-          <td>Remover Item</td>
+          {/* { (screen === 'checkout') && <td>Remover Item</td> } */}
         </tr>
       </thead>
       <tbody>
         <tr>
           <td
             data-testid={
-              `customer_${screen}__element-order-table-item-number-${key}`
+              `customer_${screen}__element-order-table-item-number-${index}`
             }
           >
-            {
-              id
-            }
+            { id }
           </td>
           <td
             data-testid={
-              `customer_${screen}__element-order-table-name-${key}`
+              `customer_${screen}__element-order-table-name-${index}`
             }
           >
-            {
-              name
-            }
+            { name }
           </td>
           <td
-            data-testid={ `customer_${screen}__element-order-table-quantity-${key}` }
+            data-testid={ `customer_${screen}__element-order-table-quantity-${index}` }
           >
-            {
-              quantityItens
-            }
+            { quantityItens }
           </td>
           <td
             data-testid={
-              `customer_${screen}__element-order-table-unit-price-${key}`
+              `customer_${screen}__element-order-table-unit-price-${index}`
             }
           >
-            {
-              price
-            }
+            { formatPrice(price) }
           </td>
           <td
             data-testid={
-              `customer_${screen}__element-order-table-sub-total-${key}`
+              `customer_${screen}__element-order-table-sub-total-${index}`
             }
           >
             R$:
-            {price * quantityItens}
+            { formatPrice(price * quantityItens) }
           </td>
         </tr>
       </tbody>
@@ -67,8 +69,8 @@ export default function TableList(props) {
 
 TableList.propTypes = {
   id: PropTypes.number.isRequired,
-  key: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   screen: PropTypes.string.isRequired,
   quantityItens: PropTypes.number.isRequired,

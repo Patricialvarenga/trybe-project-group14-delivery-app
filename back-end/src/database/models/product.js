@@ -4,19 +4,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: {
-        notEmpty: true,
-      }
+      validate: { notEmpty: true },
     },
     price: {
       type: DataTypes.DECIMAL(9, 2),
       allowNull: false,
-      validate: {
-        notEmpty: true,
-      }
+      validate: { notEmpty: true },
     },
-    urlImage: {
-      type: DataTypes.STRING,
+    urlImage: { type: DataTypes.STRING,
       allowNull: false,
       defaultValue: ''
     },

@@ -41,6 +41,7 @@ const findAll = async ({ id, role }) => {
   }
 
   const sales = await sale.findAll({ where: { userId: id } });
+  console.log(sales);
   if (!sales) return NewError(SALE_NOT_EXIST_404);
 
   return sales;
