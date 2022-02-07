@@ -44,14 +44,15 @@ const verifyToken = async (req, res, next) => {
 const verifyRoleAdm = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
+
     if (!authorization) {
       return res.status(UNAUTHORIZED).json(messages.MISSING_TOKEN_401);
     }
 
     const decoded = jwt.verify(authorization, secretKey);
-    const { email } = decoded.data;
+    const { email, role } = decoded.data;
     const foundedEmail = await user.findOne({ where: { email } });
-    if (foundedEmail.role !== authorization) return next(messages.UNAUTHORIZED_ROLE);
+    if (foundedEmail.role !== role) return next(messages.UNAUTHORIZED_ROLE);
    
     next();
   } catch (err) {
