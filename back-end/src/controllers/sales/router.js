@@ -7,7 +7,7 @@ const validation = require('../../global/middlewares/validation');
 
 const router = express.Router({ mergeParams: true });
 
-router.get('/details', auth.verifyToken, findById);
+router.get('/details/:id', auth.verifyToken, findById);
 router.get('/', auth.verifyToken, findAll);
 router.post('/', auth.verifyToken, validation.sale, create);
 
