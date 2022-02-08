@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AppContext from '../../context/AppContext';
 import TableList from '../../components/TableList';
-import NavBar from '../../components/NavBarSeller';
+import NavBar from '../../components/NavBar';
 
 export default function CustomerOrdersDetails() {
   const [order, setOrder] = useState({
